@@ -11,10 +11,11 @@ create_symlink() {
     local DEST=$2
 
     # Backup existing file or directory if it exists
-    # if [ -e "$DEST" ] || [ ! -L "$DEST" ]; then
-    #     echo "Backing up existing $DEST to $SRC.bak"
-    #     mv "$DEST" "$SRC.bak"
-    # fi
+    if [ -e "$DEST" ] || [ -L "$DEST" ]; then
+        return
+        # echo "Backing up existing $DEST to $SRC.bak"
+        # mv "$DEST" "$SRC.bak"
+    fi
 
     # Create the symbolic link
     ln -s "$SRC" "$DEST"
@@ -29,7 +30,7 @@ for FILE in "$DOTFILES_DIR"/.??* "$DOTFILES_DIR"/*; do
     echo $BASENAME
     
     # Skip init.sh and README.md file
-    if [ "$BASENAME" == "init.sh" ] || [ "$BASENAME" == "README.md" ]; then
+    if [ "$BASENAME" == "init.sh" ] || [ "$BASENAME" == "README.md" ] || [ "$BASENAME" == ".git" ]; then
 	echo "skipping init and readme"
         continue
     fi

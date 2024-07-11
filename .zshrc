@@ -129,6 +129,8 @@ export PATH=$PATH:~/.local/share/lsp/bin
 export PATH=$PATH:~/.local/scripts
 
 
+# Default editor
+export EDITOR=nvim
 
 # Golang
 export PATH=$PATH:~/go/bin
@@ -171,6 +173,9 @@ export PATH=$PATH:~/.turso
 
 # flyio
 export PATH=$PATH:~/.fly/bin
+
+export POWERMENU=~/.config/rofi/scripts/powermenu_t6
+export LAUNCHER=~/.config/rofi/scripts/launcher_t7
 
 
 # Run hyfetch
