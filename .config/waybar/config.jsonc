@@ -1,6 +1,6 @@
 {
-	"layer": "top",
-	"modules-left": ["custom/launcher","network","cpu","memory","tray"],
+	"layer": "left",
+    "modules-left": ["custom/launcher","network","cpu","memory","tray"],
 	"modules-center": ["clock"],
 	"modules-right": ["pulseaudio","battery"],
 	
@@ -67,22 +67,11 @@
     },
     "custom/launcher":{
         "format": " ",
-        "on-click": "$LAUNCHER",
+        "on-click": "bash $LAUNCHER",
         "on-click-right": "killall rofi"
     },
     "custom/power":{
         "format": " ",
         "on-click": "bash ~/.config/rofi/leave/leave.sh",
     },
-    // "custom/updates":{
-    //     "format": "{} Update(s)",
-    //     "exec": "checkupdates | wc -l",
-    //     "exec-if": "[[ $(checkupdates | wc -l) != 0 ]]",
-    //     "interval": 15,
-    //     "on-click": "kitty -e yay -Syu && notify-send 'The system has been updated' "
-    // },
-    // "custom/wallpaper":{
-    //     "format":" ",
-    //     "on-click": "bash ~/.config/system_scripts/pkill_bc"
-    // }
 }
