@@ -179,4 +179,4 @@ export LAUNCHER=~/.config/rofi/scripts/launcher_t7
 
 
 # Run fastfetch
-# fastfetch
+fastfetch
