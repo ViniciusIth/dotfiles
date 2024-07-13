@@ -18,4 +18,4 @@ yay -S --needed --noconfirm grim slurp
 yay -S --needed --noconfirm swaybg waypaper
 
 # Misc
-yay -S --needed --noconfirm btop-git wallust
+yay -S --needed --noconfirm btop-git wallust fastfetch

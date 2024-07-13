@@ -178,5 +178,5 @@ export POWERMENU=~/.config/rofi/scripts/powermenu_t6
 export LAUNCHER=~/.config/rofi/scripts/launcher_t7
 
 
-# Run hyfetch
-hyfetch
+# Run fastfetch
+# fastfetch
