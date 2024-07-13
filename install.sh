@@ -3,19 +3,19 @@
 yay --save --norebuild --noredownload --answerclean None --answerdiff None
 
 # Nerd Font
-yay -S --needed ttf-jetbrains-mono
+yay -S --needed --noconfirm ttf-jetbrains-mono
 
 # Hyprland, login and essentials
-yay -S --needed hyprland-git kitty sddm-git zsh wlogout swaync wofi man-db
+yay -S --needed --noconfirm hyprland-git kitty sddm-git zsh wlogout swaync wofi man-db
 
-# Nvim and tmux
-yay -S --needed neovim-git wl-copy ripgrep tmux
+# Nvim and clipboard
+yay -S --needed --noconfirm neovim-git wl-copy ripgrep clipse
 
 # Print etc
-yay -S --needed grim slurp
+yay -S --needed --noconfirm grim slurp
 
 # Background
-yay -S --needed swaybg waypaper
+yay -S --needed --noconfirm swaybg waypaper
 
 # Misc
-yay -S --needed btop-git wallust
+yay -S --needed --noconfirm btop-git wallust
