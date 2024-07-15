@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-    "modules-left": ["network","cpu","memory"],
+    "modules-left": ["network", "bluetooth"],
 	"modules-center": ["clock"],
 	"modules-right": ["pulseaudio","backlight","battery","custom/power"],
 	
@@ -16,12 +16,18 @@
 		}
 	},
 	"network": {
-		"tooltip": false,
 		"format-wifi": " {essid}",
 		"format-ethernet": "",
-        "tooltip": true,
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "max-length": 15
+		"format-wifi": " {essid}",
+		"format-ethernet": "",
+        "max-length": 15,
+        "on-click": "kitty --class tuibar nmtui"
+    },
+    "bluetooth": {
+        "tooltip": false,
+        "max-length": 15,
+        "on-click": "kitty --class tuibar bluetui"
     },
     "battery": {
         "states": {

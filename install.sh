@@ -6,7 +6,10 @@ yay --save --norebuild --noredownload --answerclean None --answerdiff None
 yay -S --needed --noconfirm ttf-jetbrains-mono
 
 # Hyprland, login and essentials
-yay -S --needed --noconfirm hyprland-git kitty sddm-git zsh wlogout swaync wofi man-db
+yay -S --needed --noconfirm hyprland-git kitty sddm-git zsh wlogout swaync wofi man-db bluez bluez-utils bluetui
+
+# Sound control etc
+yay -S --needed --noconfirm pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber pavucontrol
 
 # Nvim and clipboard
 yay -S --needed --noconfirm neovim-git wl-copy ripgrep clipse
