@@ -1,53 +1,94 @@
 {
-	"layer": "top",
-    "modules-left": ["network", "bluetooth"],
-	"modules-center": ["clock"],
-	"modules-right": ["pulseaudio","backlight","battery","custom/power"],
-	
-	"pulseaudio": {
-		"tooltip": false,
-		"scroll-step": 5,
-		"format": "{icon} {volume}%",
-		"format-muted": "{icon} {volume}%",
-		"on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "layer": "top",
+    "modules-left": [
+        "clock",
+        "clock#date"
+    ],
+    "modules-center": [
+        "tray",
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "bluetooth",
+        "network",
+        "pulseaudio",
+        "backlight",
+        "battery",
+        "custom/power"
+    ],
+    "pulseaudio": {
+        "tooltip": false,
+        "scroll-step": 6,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{icon}  {volume}%",
+        "format-bluetooth-muted": "婢  muted",
+        "format-muted": "婢 muted",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "reverse-scrolling": true,
-		"format-icons": {
-			"default": ["", "", ""]
-		}
-	},
-	"network": {
-		"format-wifi": " {essid}",
-		"format-ethernet": "",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-		"format-wifi": " {essid}",
-		"format-ethernet": "",
-        "max-length": 15,
-        "on-click": "kitty --class tuibar nmtui"
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
+        }
+    },
+    "network": {
+        "format": "󰤭 searching",
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {signalStrength}%",
+        "format-disconnected": "✈ off",
+        "tooltip-format-wifi": " {essid}",
+        "tooltip-format-ethernet": " {essid}",
+        "on-click": "rfkill toggle wlan",
+        "on-click-right": "kitty --class tuibar nmtui"
     },
     "bluetooth": {
         "tooltip": false,
-        "max-length": 15,
-        "on-click": "kitty --class tuibar bluetui"
+        "on-click": "rfkill toggle bluetooth",
+        "on-click-right": "kitty --class tuibar bluetui"
     },
     "battery": {
+        "interval": 60,
         "states": {
-            "good": 100,
             "warning": 30,
-            "critical": 10
+            "critical": 15
         },
-        "format": "{icon}  {capacity}%",
+        "format": "{capacity}% {icon}",
+        "format-warning": "{icon} {capacity}%",
+        "format-critical": "{icon} {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-alt": "{icon} {capacity}%",
+        "format-full": " 100%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     },
-	"tray":{
-		"icon-size":18,
-		"spacing": 10
-	},
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
     "clock": {
-        "format": "{:%H:%M %d/%m/%Y}",
-        "tooltip": false
+        "format": " {:%H:%M}"
+    },
+    "clock#date": {
+        "format": " {:%A, %B %d, %Y}"
     },
     "cpu": {
         "interval": 15,
@@ -75,13 +116,31 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{percent}% {icon}",
-        "format-icons": ["○","", ""],
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
         "reverse-scrolling": true,
         "on-scroll-up": "backlight_control +2",
-        "on-scroll-down": "backlight_control -2",
+        "on-scroll-down": "backlight_control -2"
     },
-    "custom/power":{
+    "custom/power": {
         "format": "⏻",
-        "on-click": "wlogout",
+        "on-click": "wlogout"
+   },
+    "hyprland/workspaces": {
+        "persistent-workspaces": {
+            "*": 3 // 5 workspaces by default on every monitor
+        }
+    },
+    "hyprland/window": {
+        "format": "{}",
+        "separate-outputs": true,
+        "max-length": 40
     }
 }

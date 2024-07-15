@@ -85,6 +85,7 @@ return {
         lspconfig["htmx"].setup(require("config.lsp.html")(capabilities, on_attach))
         lspconfig["emmet_language_server"].setup(require("config.lsp.html")(capabilities, on_attach))
 
+        lspconfig["jsonls"].setup({ capabilities = capabilities, on_attach = on_attach, filetypes={"jsonc"} })
         lspconfig["sqlls"].setup({ capabilities = capabilities, on_attach = on_attach })
         lspconfig["tsserver"].setup({ capabilities = capabilities, on_attach = on_attach })
         lspconfig["svelte"].setup({ capabilities = capabilities, on_attach = on_attach })
