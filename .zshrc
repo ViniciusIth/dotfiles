@@ -137,11 +137,11 @@ export PATH=$PATH:~/go/bin
 
 # Nvim
 export PATH=$PATH:/opt/nvim-linux64/bin
+
 # Neovide
 export PATH=$PATH:~/.cargo/bin/neovide
 
 # JDK
-
 export PATH_TO_FX=/home/viniciusith/.jdks/openjfx-21.0./javafx-sdk-21.0.3/lib
 export JAVA_HOME=/opt/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7
 export PATH=$PATH:$JAVA_HOME/bin
@@ -177,6 +177,16 @@ export PATH=$PATH:~/.fly/bin
 export POWERMENU=~/.config/rofi/scripts/powermenu_t6
 export LAUNCHER=~/.config/rofi/scripts/launcher_t7
 
+# Yazi wrapper
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # Run fastfetch
 fastfetch
+
