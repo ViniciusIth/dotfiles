@@ -19,7 +19,7 @@
     "pulseaudio": {
         "tooltip": false,
         "scroll-step": 6,
-        "format": "{volume}% {icon}",
+        "format": "{icon} {volume}%",
         "format-bluetooth": "{icon}  {volume}%",
         "format-bluetooth-muted": "婢  muted",
         "format-muted": "婢 muted",
@@ -60,12 +60,11 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
+        "format": "{icon} {capacity}%",
         "format-warning": "{icon} {capacity}%",
         "format-critical": "{icon} {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
-        "format-alt": "{icon} {capacity}%",
         "format-full": " 100%",
         "format-icons": [
             "",
@@ -85,9 +84,11 @@
         "spacing": 10
     },
     "clock": {
+        "tooltip": false,
         "format": " {:%H:%M}"
     },
     "clock#date": {
+        "tooltip": false,
         "format": " {:%A, %B %d, %Y}"
     },
     "cpu": {
@@ -114,6 +115,7 @@
         "on-click": "playerctl play-pause"
     },
     "backlight": {
+        "tooltip": false,
         "device": "intel_backlight",
         "format": "{percent}% {icon}",
         "format-icons": [
@@ -130,8 +132,9 @@
         "on-scroll-down": "backlight_control -2"
     },
     "custom/power": {
+        "tooltip": false,
         "format": "⏻",
-        "on-click": "wlogout"
+        "on-click": "~/.config/wofi/scripts/powermenu.sh"
    },
     "hyprland/workspaces": {
         "persistent-workspaces": {
