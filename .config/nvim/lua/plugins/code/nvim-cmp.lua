@@ -22,17 +22,18 @@ return {
         "saadparwaiz1/cmp_luasnip",     -- for autocompletion
         "rafamadriz/friendly-snippets", -- useful snippets
         "onsails/lspkind.nvim",         -- vs-code like pictograms
+        'jmbuhr/otter.nvim',
+        'R-nvim/cmp-r'
     },
     config = function()
         local cmp = require("cmp")
-
         local luasnip = require("luasnip")
-
         local lspkind = require("lspkind")
 
         -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
         require("luasnip.loaders.from_vscode").lazy_load()
 
+        -- Will cause problems with R because '.' is not a breaking character
         cmp.setup({
             completion = {
                 completeopt = "menu,menuone,preview,noselect",
@@ -49,50 +50,72 @@ return {
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.close(),
-                ["<CR>"] = cmp.mapping.confirm {
-                    behavior = cmp.ConfirmBehavior.Insert,
-                    select = true,
-                },
+                ['<CR>'] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        if luasnip.expandable() then
+                            luasnip.expand()
+                        else
+                            cmp.confirm({
+                                select = true,
+                            })
+                        end
+                    else
+                        fallback()
+                    end
+                end),
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif require("luasnip").expand_or_jumpable() then
-                        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
-                            "")
+                    elseif luasnip.locally_jumpable(1) then
+                        luasnip.jump(1)
                     else
                         fallback()
                     end
-                end, {
-                    "i",
-                    "s",
-                }),
+                end, { "i", "s", }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif require("luasnip").jumpable(-1) then
-                        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+                    elseif luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
                     else
                         fallback()
                     end
-                end, {
-                    "i",
-                    "s",
-                }),
+                end, { "i", "s", }),
             },
             -- sources for autocompletion
             sources = cmp.config.sources({
+                { name = "path" }, -- file system paths
                 { name = "nvim_lsp" },
-                { name = "luasnip" }, -- snippets
-                { name = "buffer" },  -- text within current buffer
-                { name = "path" },    -- file system paths
+                { name = 'nvim_lsp_signature_help' },
+                { name = "luasnip",                keyword_length = 3, max_item_count = 3 }, -- snippets
+                { name = "buffer",                 keyword_length = 5, max_item_count = 3 }, -- text within current buffer
+                { name = "treesitter",             keyword_length = 5, max_item_count = 3 },
+                { name = 'otter' },
+                { name = 'cmp_r' }
             }),
             -- configure lspkind for vs-code like pictograms in completion menu
             formatting = {
-                format = lspkind.cmp_format({
-                    maxwidth = 50,
-                    ellipsis_char = "...",
-                }),
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, vim_item)
+                    local kind = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                    local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                    kind.kind = " " .. (strings[1] or "") .. " "
+                    kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+                    return kind
+                end,
             },
+            window = {
+                completion = {
+                    winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                    col_offset = -3,
+                    side_padding = 0,
+                },
+                documentation = cmp.config.window.bordered(),
+            },
+            view = {
+                name = 'custom', selection_order = 'near_cursor'
+            }
         })
     end,
 }

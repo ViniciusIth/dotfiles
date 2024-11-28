@@ -38,8 +38,9 @@ local function my_on_attach(bufnr)
 
     vim.keymap.set("n", "I", api.tree.toggle_hidden_filter, opts "Toggle hidden filter")
     vim.keymap.set("n", "G", api.tree.toggle_gitignore_filter, opts "Toggle ignore filter")
-    vim.keymap.set("n", "D", api.fs.remove, opts "Delete file or directory")
-    vim.keymap.set("n", "d", api.fs.create, opts "Create file or directory")
+    vim.keymap.set("n", "D", api.fs.remove, opts "Permanently delete file or directory")
+    vim.keymap.set("n", "d", api.fs.trash, opts "Delete file or directory")
+    vim.keymap.set("n", "a", api.fs.create, opts "Create file or directory")
     vim.keymap.set("n", "r", api.fs.rename_full, opts "Rename file")
 
     vim.keymap.set("n", "l", edit_or_open, opts "Edit Or Open")
@@ -61,7 +62,7 @@ return {
             on_attach = my_on_attach,
 
             -- Must be set so that nvim-tree can sync with telescope git switch
-            sync_root_with_cwd = true,
+            -- sync_root_with_cwd = true,
             respect_buf_cwd = true,
             update_focused_file = {
                 enable = true,
