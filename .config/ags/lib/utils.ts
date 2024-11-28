@@ -1,113 +1,132 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { type Application } from "types/service/applications"
-import icons, { substitutes } from "./icons"
-import Gtk from "gi://Gtk?version=3.0"
-import Gdk from "gi://Gdk"
-import GLib from "gi://GLib?version=2.0"
+import { Gtk, App } from "astal/gtk3";
+import { GLib, monitorFile, writeFile, exec, Gio, execAsync } from "astal";
+import { transparentScrimWindowNames, scrimWindowNames } from "./variables";
+import AstalNotifd from "gi://AstalNotifd?version=0.1";
+import { controlCenterPage } from "../widget/ControlCenter";
 
-export type Binding<T> = import("types/service").Binding<any, any, T>
-
-/**
-  * @returns substitute icon || name || fallback icon
-  */
-export function icon(name: string | null, fallback = icons.missing) {
-    if (!name)
-        return fallback || ""
-
-    if (GLib.file_test(name, GLib.FileTest.EXISTS))
-        return name
-
-    const icon = (substitutes[name] || name)
-    if (Utils.lookUpIcon(icon))
-        return icon
-
-    print(`no icon substitute "${icon}" for "${name}", fallback: "${fallback}"`)
-    return fallback
-}
-
-/**
- * @returns execAsync(["bash", "-c", cmd])
- */
-export async function bash(strings: TemplateStringsArray | string, ...values: unknown[]) {
-    const cmd = typeof strings === "string" ? strings : strings
-        .flatMap((str, i) => str + `${values[i] ?? ""}`)
-        .join("")
-
-    return Utils.execAsync(["bash", "-c", cmd]).catch(err => {
-        console.error(cmd, err)
-        return ""
-    })
-}
-
-/**
- * @returns execAsync(cmd)
- */
-export async function sh(cmd: string | string[]) {
-    return Utils.execAsync(cmd).catch(err => {
-        console.error(typeof cmd === "string" ? cmd : cmd.join(" "), err)
-        return ""
-    })
-}
-
-export function forMonitors(widget: (monitor: number) => Gtk.Window) {
-    const n = Gdk.Display.get_default()?.get_n_monitors() || 1
-    return range(n, 0).flatMap(widget)
-}
-
-/**
- * @returns [start...length]
- */
 export function range(length: number, start = 1) {
-    return Array.from({ length }, (_, i) => i + start)
+    return Array.from({ length }, (_, i) => i + start);
 }
 
-/**
- * @returns true if all of the `bins` are found
- */
-export function dependencies(...bins: string[]) {
-    const missing = bins.filter(bin => Utils.exec({
-        cmd: `which ${bin}`,
-        out: () => false,
-        err: () => true,
-    }))
+export const activePopupWindows = (scrimType: "transparent" | "opaque") => {
+    const windowNames =
+        scrimType === "transparent"
+            ? transparentScrimWindowNames.get()
+            : scrimWindowNames.get();
 
-    if (missing.length > 0) {
-        console.warn(Error(`missing dependencies: ${missing.join(", ")}`))
-        Utils.notify(`missing dependencies: ${missing.join(", ")}`)
+    return App.get_windows().filter(
+        (window) => windowNames.includes(window.name) && window.visible,
+    );
+};
+
+export function toggleWindow(windowName: string) {
+    const window = App.get_window(windowName);
+    if (!window) return;
+
+    const isTransparent = transparentScrimWindowNames
+        .get()
+        .includes(windowName);
+
+    if (window.visible) {
+        window.visible = false;
+        if (windowName === "control-center") controlCenterPage.set("main");
+    } else {
+        if (isTransparent) {
+            if (
+                windowName === "notifications" &&
+                AstalNotifd.get_default().get_notifications().length === 0
+            )
+                return;
+            App.get_window("transparent-scrim")?.set_visible(true);
+        } else {
+            activePopupWindows("opaque").forEach(
+                (win) => (win.visible = false),
+            );
+            App.get_window("opaque-scrim")?.set_visible(true);
+        }
+        window.visible = true;
     }
-
-    return missing.length === 0
 }
 
-/**
- * run app detached
- */
-export function launchApp(app: Application) {
-    const exe = app.executable
-        .split(/\s+/)
-        .filter(str => !str.startsWith("%") && !str.startsWith("@"))
-        .join(" ")
-
-    bash(`${exe} &`)
-    app.frequency += 1
+export function hexToRgb(hex: string) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (result != null) {
+        return {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16),
+        };
+    }
 }
 
-/**
- * to use with drag and drop
- */
-export function createSurfaceFromWidget(widget: Gtk.Widget) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cairo = imports.gi.cairo as any
-    const alloc = widget.get_allocation()
-    const surface = new cairo.ImageSurface(
-        cairo.Format.ARGB32,
-        alloc.width,
-        alloc.height,
-    )
-    const cr = new cairo.Context(surface)
-    cr.setSourceRGBA(255, 255, 255, 0)
-    cr.rectangle(0, 0, alloc.width, alloc.height)
-    cr.fill()
-    widget.draw(cr)
-    return surface
+export function lookUpIcon(name?: string, size = 16) {
+    if (!name) return null;
+
+    return Gtk.IconTheme.get_default().lookup_icon(
+        name,
+        size,
+        Gtk.IconLookupFlags.USE_BUILTIN,
+    );
+}
+
+export function monitorColorsChange() {
+    monitorFile(`${GLib.getenv("HOME")}/.config/ags/style/colors.scss`, () => {
+        print("realoading css")
+        const target = "/tmp/astal/style.css";
+        exec(
+            `sass ${GLib.getenv("HOME")}/.config/ags/style/main.scss ${target}`,
+        );
+        App.apply_css(target, true);
+    });
+}
+
+export function monitorDashboard() {
+    monitorFile(
+        `${GLib.getenv("HOME")}/.config/ags/style/dashboard.scss`,
+        () => {
+            print("realoading css")
+            const target = "/tmp/astal/style.css";
+            exec(
+                `sass ${GLib.getenv("HOME")}/.config/ags/style/main.scss ${target}`,
+            );
+            App.apply_css(target, true);
+        },
+    );
+}
+
+export function dependencies(packages: string[]) {
+    for (const pkg of packages) {
+        const result = GLib.find_program_in_path(pkg);
+        if (!result) {
+            return false;
+        }
+    }
+    return true;
+}
+
+export function ensureDirectory(path: string) {
+    if (!GLib.file_test(path, GLib.FileTest.EXISTS))
+        Gio.File.new_for_path(path).make_directory_with_parents(null);
+}
+
+export async function sh(cmd: string | string[]) {
+    return execAsync(cmd).catch((err) => {
+        console.error(typeof cmd === "string" ? cmd : cmd.join(" "), err);
+        return "";
+    });
+}
+
+export async function bash(
+    strings: TemplateStringsArray | string,
+    ...values: unknown[]
+) {
+    const cmd =
+        typeof strings === "string"
+            ? strings
+            : strings.flatMap((str, i) => str + `${values[i] ?? ""}`).join("");
+
+    return execAsync(["bash", "-c", cmd]).catch((err) => {
+        console.error(cmd, err);
+        return "";
+    });
 }

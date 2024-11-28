@@ -1,0 +1,111 @@
+@use 'sass:color';
+
+
+$background: #1a110f;
+
+$error: #ffb4ab;
+
+$error_container: #93000a;
+
+$inverse_on_surface: #392e2c;
+
+$inverse_primary: #904b3b;
+
+$inverse_surface: #f1dfdb;
+
+$on_background: #f1dfdb;
+
+$on_error: #690005;
+
+$on_error_container: #ffdad6;
+
+$on_primary: #561f12;
+
+$on_primary_container: #ffdad2;
+
+$on_primary_fixed: #3a0a02;
+
+$on_primary_fixed_variant: #733426;
+
+$on_secondary: #442a24;
+
+$on_secondary_container: #ffdad2;
+
+$on_secondary_fixed: #2c1510;
+
+$on_secondary_fixed_variant: #5d3f39;
+
+$on_surface: #f1dfdb;
+
+$on_surface_variant: #d8c2bd;
+
+$on_tertiary: #3c2f04;
+
+$on_tertiary_container: #f8e0a6;
+
+$on_tertiary_fixed: #241a00;
+
+$on_tertiary_fixed_variant: #544519;
+
+$outline: #a08c88;
+
+$outline_variant: #534340;
+
+$primary: #ffb4a3;
+
+$primary_container: #733426;
+
+$primary_fixed: #ffdad2;
+
+$primary_fixed_dim: #ffb4a3;
+
+$scrim: #000000;
+
+$secondary: #e7bdb4;
+
+$secondary_container: #5d3f39;
+
+$secondary_fixed: #ffdad2;
+
+$secondary_fixed_dim: #e7bdb4;
+
+$shadow: #000000;
+
+$source_color: #fb461e;
+
+$surface: #1a110f;
+
+$surface_bright: #423734;
+
+$surface_container: #271d1b;
+
+$surface_container_high: #322825;
+
+$surface_container_highest: #3d3230;
+
+$surface_container_low: #231917;
+
+$surface_container_lowest: #140c0a;
+
+$surface_dim: #1a110f;
+
+$surface_tint: #ffb4a3;
+
+$surface_variant: #534340;
+
+$tertiary: #dbc58c;
+
+$tertiary_container: #544519;
+
+$tertiary_fixed: #f8e0a6;
+
+$tertiary_fixed_dim: #dbc58c;
+
+
+
+$theme: 'dark';
+$surface_transparent: color.adjust($surface, $alpha: -0.2);
+$inverse_surface_transparent: color.adjust($inverse_surface, $alpha: -0.9);
+$inverse_surface_transparent_variant: color.adjust($inverse_surface, $alpha: -0.8);
+$inverse_surface_transparent_overlay: linear-gradient(0deg, $inverse_surface_transparent, $inverse_surface_transparent);
+$inverse_surface_transparent_variant_overlay: linear-gradient(0deg, $inverse_surface_transparent_variant, $inverse_surface_transparent_variant);
