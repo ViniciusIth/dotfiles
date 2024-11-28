@@ -42,8 +42,8 @@ reveal = [
 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
-	{ run = 'unar "%1"', desc = "Extract here", for = "windows" },
+	{ run = '7z x "$1" -aot', desc = "Extract here", for = "unix" },
+	{ run = '7z x "%1" -aot', desc = "Extract here", for = "windows" },
 ]
 play = [
 	{ run = 'qimgv "$@"', orphan = true, for = "unix" },
@@ -80,7 +80,6 @@ suppress_preload = false
 [plugin]
 
 preloaders = [
-	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
 	# Image
 	{ mime = "image/*", run = "image" },
 	# Video

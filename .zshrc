@@ -138,14 +138,14 @@ export PATH=$PATH:~/go/bin
 # Nvim
 export PATH=$PATH:/opt/nvim-linux64/bin
 
-# Neovide
+# tree-sitter
+export PATH=$PATH:~/.cargo/bin
+
 export PATH=$PATH:~/.cargo/bin/neovide
 
 # JDK
-export PATH_TO_FX=/home/viniciusith/.jdks/openjfx-21.0./javafx-sdk-21.0.3/lib
 export JAVA_HOME=/opt/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7
 export PATH=$PATH:$JAVA_HOME/bin
-
 
 # Zsh-Autosuggestion
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
@@ -168,14 +168,8 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # gitlab
 export GITLAB_HOME=/srv/gitlab
 
-# Turso
-export PATH=$PATH:~/.turso
-
 # flyio
 export PATH=$PATH:~/.fly/bin
-
-export POWERMENU=~/.config/rofi/scripts/powermenu_t6
-export LAUNCHER=~/.config/rofi/scripts/launcher_t7
 
 # Yazi wrapper
 function yy() {
