@@ -36,7 +36,7 @@ for FILE in "$DOTFILES_DIR"/.??* "$DOTFILES_DIR"/*; do
     BASENAME=$(basename "$FILE")
 
     # Skip init.sh and README.md files
-    if [ "$BASENAME" == "install.sh" ] || [ "$BASENAME" == "init.sh" ] || [ "$BASENAME" == "README.md" ] || [ "$BASENAME" == ".git" ]; then
+    if [ "$BASENAME" == "install.sh" ] || [ "$BASENAME" == "update_symlinks.sh" ] || [ "$BASENAME" == "README.md" ] || [ "$BASENAME" == ".git" ] || [ "$BASENAME" == "pkglist.txt" ]; then
         echo "Skipping init.sh, README.md, and .git"
         continue
     fi
