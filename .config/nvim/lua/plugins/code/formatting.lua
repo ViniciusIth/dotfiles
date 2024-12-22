@@ -11,7 +11,7 @@ return {
                 ensure_installed = {
                     "c", "lua", "vim", "vimdoc", "query", "elixir", "heex",
                     "javascript", "html", "templ", "r", "latex", "markdown",
-                    "markdown_inline", "css", "json", "jsonc", "svelte",
+                    "markdown_inline", "css", "json", "jsonc", "svelte", "rust"
                 },
                 sync_install = false,
                 highlight = {
@@ -23,7 +23,11 @@ return {
     },
 
     {
-        "sbdchd/neoformat"
+        "mhartington/formatter.nvim",
+        config = function()
+            vim.keymap.set("n", "<leader>ff", ":Format<CR>", { desc = "Format file" })
+            vim.keymap.set("v", "<leader>ff", "'<,'>:Format<CR>", { desc = "Format file" })
+        end
     },
 
     -- {

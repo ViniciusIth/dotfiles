@@ -26,7 +26,7 @@ return {
                             "~/Projects",
                             "~/Documents"
                         },
-                        tail_path = true
+                        tail_path = false
                     },
                 },
             },

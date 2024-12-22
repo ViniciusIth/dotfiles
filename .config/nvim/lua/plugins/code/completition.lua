@@ -1,21 +1,21 @@
 return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
-    dependencies = {
-        {
-            "windwp/nvim-autopairs",
-            opts = {
-                fast_wrap = {},
-                disable_filetype = { "TelescopePrompt", "vim" },
-            },
-            config = function(_, opts)
-                require("nvim-autopairs").setup(opts)
-
-                -- setup cmp for autopairs
-                local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-                require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-            end,
+    dependencies = { {
+        "windwp/nvim-autopairs",
+        opts = {
+            fast_wrap = {},
+            disable_filetype = { "TelescopePrompt", "vim" },
         },
+        config = function(_, opts)
+            require("nvim-autopairs").setup(opts)
+
+            -- setup cmp for autopairs
+            local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+            require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+            require("cmp_r").setup({})
+        end,
+    },
         "hrsh7th/cmp-buffer",           -- source for text in buffer
         "hrsh7th/cmp-path",             -- source for file system paths
         "L3MON4D3/LuaSnip",             -- snippet engine
@@ -106,11 +106,11 @@ return {
                 end,
             },
             window = {
-                completion = {
+                completion = cmp.config.window.bordered({
                     winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
                     col_offset = -3,
                     side_padding = 0,
-                },
+                }),
                 documentation = cmp.config.window.bordered(),
             },
             view = {

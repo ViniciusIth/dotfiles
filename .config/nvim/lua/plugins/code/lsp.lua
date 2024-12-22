@@ -1,22 +1,5 @@
 return {
     {
-        -- for lsp features in code cells / embedded code
-        'jmbuhr/otter.nvim',
-        dev = false,
-        dependencies = {
-            {
-                'neovim/nvim-lspconfig',
-                'nvim-treesitter/nvim-treesitter',
-            },
-        },
-        opts = {
-            verbose = {
-                no_code_found = false,
-            }
-        },
-    },
-
-    {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
@@ -24,9 +7,7 @@ return {
             -- { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
             "hrsh7th/cmp-nvim-lsp",
             { "antosha417/nvim-lsp-file-operations", config = true },
-            { "R-nvim/R.nvim",                       version = "~0.1.0" },
         },
-
         config = function()
             -- import lspconfig plugin
             local lspconfig = require("lspconfig")
@@ -39,6 +20,8 @@ return {
             local opts = { noremap = true, silent = true }
             local on_attach = function(client, bufnr)
                 opts.buffer = bufnr
+
+                vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 
                 -- set keybinds
                 opts.desc = "Show LSP references"
@@ -98,6 +81,7 @@ return {
             lspconfig["htmx"].setup(require("config.lsp.html")(capabilities, on_attach))
             lspconfig["emmet_language_server"].setup(require("config.lsp.emmet")(capabilities, on_attach))
             lspconfig["ts_ls"].setup(require("config.lsp.tsls")(capabilities, on_attach))
+            lspconfig["rust_analyzer"].setup(require("config.lsp.rust")(capabilities, on_attach))
 
             lspconfig["jsonls"].setup({ capabilities = capabilities, on_attach = on_attach, filetypes = { "jsonc" } })
             lspconfig["sqlls"].setup({ capabilities = capabilities, on_attach = on_attach })
@@ -105,6 +89,73 @@ return {
             lspconfig["tailwindcss"].setup({ capabilities = capabilities, on_attach = on_attach })
             lspconfig["templ"].setup({ capabilities = capabilities, on_attach = on_attach })
             lspconfig["cssls"].setup({ capabilities = capabilities, on_attach = on_attach })
+            lspconfig["r_language_server"].setup({ capabilities = capabilities, on_attach = on_attach })
+            lspconfig["angularls"].setup({ capabilities = capabilities, on_attach = on_attach })
+            lspconfig["volar"].setup({ capabilities = capabilities, on_attach = on_attach })
         end
-    }
+    },
+    { -- Allows having lsp features inside markdown documents
+        'jmbuhr/otter.nvim',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+        },
+        opts = {},
+        config = function()
+            local otter = require("otter")
+            vim.keymap.set("n", "<leader>moa", otter.activate, { desc = "[m]arkdown [o]tter [a]ctivate" })
+        end
+    },
+
+    -- Rust bullshit
+    -- {
+    --     'mrcjkb/rustaceanvim',
+    --     version = '^5', -- Recommended
+    --     lazy = false, -- This plugin is already lazy
+    --     ft = "rust",
+    --     config = function()
+    --         local mason_registry = require('mason-registry')
+    --         local codelldb = mason_registry.get_package("codelldb")
+    --         local extension_path = codelldb:get_install_path() .. "/extension/"
+    --         local codelldb_path = extension_path .. "adapter/codelldb"
+    --         -- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+    --         -- If you are on Linux, replace the line above with the line below:
+    --         local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+    --         local cfg = require('rustaceanvim.config')
+    --
+    --         vim.g.rustaceanvim = {
+    --             dap = {
+    --                 adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+    --             },
+    --         }
+    --
+    --         on_attach
+    --     end
+    -- },
+
+    {
+        'rust-lang/rust.vim',
+        ft = "rust",
+        init = function()
+            vim.g.rustfmt_autosave = 1
+        end
+    },
+
+    {
+        'saecki/crates.nvim',
+        ft = { "toml" },
+        config = function()
+            require("crates").setup {
+                completion = {
+                    cmp = {
+                        enabled = true
+                    },
+                },
+            }
+            require('cmp').setup.buffer({
+                sources = { { name = "crates" } }
+            })
+        end
+    },
+
+
 }

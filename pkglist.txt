@@ -31,7 +31,6 @@ man-db
 nano
 net-tools
 networkmanager
-nnn
 noto-fonts-emoji
 npm
 obsidian
@@ -58,4 +57,5 @@ telegram-desktop
 ttf-jetbrains-mono
 wl-clipboard
 yazi
+zathura
 zsh
