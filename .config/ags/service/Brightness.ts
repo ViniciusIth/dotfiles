@@ -3,67 +3,69 @@ import { exec, execAsync, monitorFile, readFileAsync, Variable } from "astal";
 const get = (args: string) => Number(exec(`brightnessctl ${args}`));
 
 const screen = await execAsync(
-	'bash -c "ls -w1 /sys/class/backlight | head -1"',
+    'bash -c "ls -w1 /sys/class/backlight | head -1"',
 );
 
 type BrightnessServiceType = {
-	screen: number;
+    screen: number;
 };
 
 class BrightnessService {
-	#screen = Variable(get("get") / get("max"));
-	#screenMax = get("max");
+    #screen = Variable(get("get") / get("max"));
+    #screenMax = get("max");
 
-	get(): BrightnessServiceType {
-		return {
-			screen: this.#screen.get(),
-		};
-	}
+    get(): BrightnessServiceType {
+        return {
+            screen: this.#screen.get(),
+        };
+    }
 
-	get screen(): number {
-		return this.#screen.get();
-	}
+    get screen(): number {
+        return this.#screen.get();
+    }
 
-	get screenMax(): number {
-		return this.#screenMax;
-	}
+    get screenMax(): number {
+        return this.#screenMax;
+    }
 
-	set screen(percent: number) {
-		if (percent < 0) percent = 0;
+    set screen(percent: number) {
+        if (percent <= 0) percent = 0.01;
 
-		if (percent > 1) percent = 1;
+        if (percent > 1) percent = 1;
 
-		execAsync(`brightnessctl set ${Math.floor(percent * 100)}% -q`).then(
-			() => {
-				this.#screen.set(percent);
-			},
-		);
-	}
+        log(percent.toString());
 
-	subscribe(callback: (v: BrightnessServiceType) => void) {
-		const unsubScreen = this.#screen.subscribe((value) => {
-			callback({ screen: this.#screen.get() });
-		});
+        execAsync(`brightnessctl set ${Math.ceil(percent * 100)}% -q`).then(
+            () => {
+                this.#screen.set(percent);
+            },
+        );
+    }
 
-		return () => {
-			unsubScreen();
-		};
-	}
+    subscribe(callback: (v: BrightnessServiceType) => void) {
+        const unsubScreen = this.#screen.subscribe((value) => {
+            callback({ screen: this.#screen.get() });
+        });
 
-	constructor() {
-		const screenPath = `/sys/class/backlight/${screen}/brightness`;
+        return () => {
+            unsubScreen();
+        };
+    }
 
-		monitorFile(screenPath, async (f) => {
-			const v = await readFileAsync(f);
-			this.#screen.set(Number(v) / this.#screenMax);
-		});
-	}
+    constructor() {
+        const screenPath = `/sys/class/backlight/${screen}/brightness`;
+
+        monitorFile(screenPath, async (f) => {
+            const v = await readFileAsync(f);
+            this.#screen.set(Number(v) / this.#screenMax);
+        });
+    }
 }
 
 let service: BrightnessService | null = null;
 
 if (screen) {
-	service = new BrightnessService();
+    service = new BrightnessService();
 }
 
 export default service;
