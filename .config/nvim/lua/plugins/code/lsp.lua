@@ -75,62 +75,46 @@ return {
                 vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
             end
 
-            lspconfig["lua_ls"].setup(require("config.lsp.lua_ls")(capabilities, on_attach))
-            lspconfig["gopls"].setup(require("config.lsp.gopls")(capabilities, on_attach))
-            lspconfig["html"].setup(require("config.lsp.html")(capabilities, on_attach))
-            lspconfig["htmx"].setup(require("config.lsp.html")(capabilities, on_attach))
-            lspconfig["emmet_language_server"].setup(require("config.lsp.emmet")(capabilities, on_attach))
-            lspconfig["ts_ls"].setup(require("config.lsp.tsls")(capabilities, on_attach))
-            lspconfig["rust_analyzer"].setup(require("config.lsp.rust")(capabilities, on_attach))
+            require("mason-lspconfig").setup_handlers {
+                -- Handler padrão para servidores simples
+                function(server_name)
+                    require("lspconfig")[server_name].setup({
+                        capabilities = capabilities,
+                        on_attach = on_attach
+                    })
+                end,
 
-            lspconfig["jsonls"].setup({ capabilities = capabilities, on_attach = on_attach, filetypes = { "jsonc" } })
-            lspconfig["sqlls"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["svelte"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["tailwindcss"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["templ"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["cssls"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["r_language_server"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["angularls"].setup({ capabilities = capabilities, on_attach = on_attach })
-            lspconfig["volar"].setup({ capabilities = capabilities, on_attach = on_attach })
+                -- Configurações manuais para servidores mais complexos
+                ["lua_ls"] = function()
+                    require("lspconfig").lua_ls.setup(require("config.lsp.lua_ls")(capabilities, on_attach))
+                end,
+                ["gopls"] = function()
+                    require("lspconfig").gopls.setup(require("config.lsp.gopls")(capabilities, on_attach))
+                end,
+                ["emmet_language_server"] = function()
+                    require("lspconfig").emmet_language_server.setup(require("config.lsp.emmet")(capabilities, on_attach))
+                end,
+                ["ts_ls"] = function()
+                    require("lspconfig").ts_ls.setup(require("config.lsp.tsls")(capabilities, on_attach))
+                end,
+                ["rust_analyzer"] = function()
+                    require("lspconfig").rust_analyzer.setup(require("config.lsp.rust")(capabilities, on_attach))
+                end,
+            }
         end
     },
+
     { -- Allows having lsp features inside markdown documents
         'jmbuhr/otter.nvim',
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
-        },
+       },
         opts = {},
         config = function()
             local otter = require("otter")
             vim.keymap.set("n", "<leader>moa", otter.activate, { desc = "[m]arkdown [o]tter [a]ctivate" })
         end
     },
-
-    -- Rust bullshit
-    -- {
-    --     'mrcjkb/rustaceanvim',
-    --     version = '^5', -- Recommended
-    --     lazy = false, -- This plugin is already lazy
-    --     ft = "rust",
-    --     config = function()
-    --         local mason_registry = require('mason-registry')
-    --         local codelldb = mason_registry.get_package("codelldb")
-    --         local extension_path = codelldb:get_install_path() .. "/extension/"
-    --         local codelldb_path = extension_path .. "adapter/codelldb"
-    --         -- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-    --         -- If you are on Linux, replace the line above with the line below:
-    --         local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-    --         local cfg = require('rustaceanvim.config')
-    --
-    --         vim.g.rustaceanvim = {
-    --             dap = {
-    --                 adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-    --             },
-    --         }
-    --
-    --         on_attach
-    --     end
-    -- },
 
     {
         'rust-lang/rust.vim',

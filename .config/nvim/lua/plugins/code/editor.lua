@@ -1,9 +1,7 @@
 return {
     {
         'numToStr/Comment.nvim',
-        opts = {
-            -- add any options here
-        },
+        opts = {},
         lazy = false,
     },
     {
@@ -115,15 +113,14 @@ return {
         end
     },
 
-    {
-        'jinh0/eyeliner.nvim',
-        config = function()
-            require('eyeliner').setup({
-                highlight_on_key = true,
-            })
-        end
-
-    },
+    -- {
+    --     'jinh0/eyeliner.nvim',
+    --     config = function()
+    --         require('eyeliner').setup({
+    --             highlight_on_key = true,
+    --         })
+    --     end
+    -- },
     {
         "theKnightsOfRohan/csvlens.nvim",
         dependencies = {

@@ -26,7 +26,7 @@ return {
         "mhartington/formatter.nvim",
         config = function()
             vim.keymap.set("n", "<leader>ff", ":Format<CR>", { desc = "Format file" })
-            vim.keymap.set("v", "<leader>ff", "'<,'>:Format<CR>", { desc = "Format file" })
+            vim.keymap.set("v", "<leader>ff", ":'<,'>Format<CR>", { desc = "Format file" })
         end
     },
 

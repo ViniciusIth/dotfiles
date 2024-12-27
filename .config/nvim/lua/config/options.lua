@@ -5,6 +5,7 @@ o.swapfile = false
 o.backup = false
 o.undofile = true
 o.undodir = vim.fn.stdpath('config') .. "/.undodir"
+vim.o.guifont = "JetBrainsMono Nerd Font Mono"
 
 -- Tab width etc
 o.tabstop = 4
