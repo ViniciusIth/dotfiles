@@ -1,5 +1,48 @@
 return {
     {
+        "williamboman/mason.nvim",
+        dependencies = {
+            "williamboman/mason-lspconfig.nvim",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+        },
+        config = function()
+            -- import mason
+            local mason = require("mason")
+
+            -- import mason-lspconfig
+            local mason_lspconfig = require("mason-lspconfig")
+
+            local mason_tool_installer = require("mason-tool-installer")
+
+            -- enable mason and configure icons
+            mason.setup({
+                ui = {
+                    icons = {
+                        package_installed = "✓",
+                        package_pending = "➜",
+                        package_uninstalled = "✗",
+                    },
+                },
+            })
+
+            mason_lspconfig.setup({
+                -- list of servers for mason to install
+                ensure_installed = {
+                    "lua_ls", -- lua language server
+                },
+                -- auto-install configured servers (with lspconfig)
+                automatic_installation = true, -- not the same as ensure_installed
+            })
+
+            mason_tool_installer.setup({
+                ensure_installed = {
+                    "prettier", -- prettier formatter
+                },
+            })
+        end,
+    },
+
+    {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
@@ -86,19 +129,19 @@ return {
 
                 -- Configurações manuais para servidores mais complexos
                 ["lua_ls"] = function()
-                    require("lspconfig").lua_ls.setup(require("config.lsp.lua_ls")(capabilities, on_attach))
+                    require("lspconfig").lua_ls.setup(require("lsp.servers.lua_ls")(capabilities, on_attach))
                 end,
                 ["gopls"] = function()
-                    require("lspconfig").gopls.setup(require("config.lsp.gopls")(capabilities, on_attach))
+                    require("lspconfig").gopls.setup(require("lsp.servers.gopls")(capabilities, on_attach))
                 end,
                 ["emmet_language_server"] = function()
-                    require("lspconfig").emmet_language_server.setup(require("config.lsp.emmet")(capabilities, on_attach))
+                    require("lspconfig").emmet_language_server.setup(require("lsp.servers.emmet")(capabilities, on_attach))
                 end,
                 ["ts_ls"] = function()
-                    require("lspconfig").ts_ls.setup(require("config.lsp.tsls")(capabilities, on_attach))
+                    require("lspconfig").ts_ls.setup(require("lsp.servers.tsls")(capabilities, on_attach))
                 end,
                 ["rust_analyzer"] = function()
-                    require("lspconfig").rust_analyzer.setup(require("config.lsp.rust")(capabilities, on_attach))
+                    require("lspconfig").rust_analyzer.setup(require("lsp.servers.rust")(capabilities, on_attach))
                 end,
             }
         end
@@ -108,38 +151,10 @@ return {
         'jmbuhr/otter.nvim',
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
-       },
-        opts = {},
+        },
         config = function()
             local otter = require("otter")
             vim.keymap.set("n", "<leader>moa", otter.activate, { desc = "[m]arkdown [o]tter [a]ctivate" })
         end
     },
-
-    {
-        'rust-lang/rust.vim',
-        ft = "rust",
-        init = function()
-            vim.g.rustfmt_autosave = 1
-        end
-    },
-
-    {
-        'saecki/crates.nvim',
-        ft = { "toml" },
-        config = function()
-            require("crates").setup {
-                completion = {
-                    cmp = {
-                        enabled = true
-                    },
-                },
-            }
-            require('cmp').setup.buffer({
-                sources = { { name = "crates" } }
-            })
-        end
-    },
-
-
 }

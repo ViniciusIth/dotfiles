@@ -1,21 +1,30 @@
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrw = 1
-vim.g.mapleader = " "
-vim.opt.termguicolors = true
+require("general.settings")
+require("general.keymaps")
 
-require("config.options")
-require("plugins")
-require("config.mappings")
-
-vim.notify = require("notify")
-
-if vim.g.neovide then
-    require("config.neovide")
+-- Lazy.nvim bootstraping
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd.colorscheme "catppuccin"
+require("lazy").setup({
+    { import = "lsp" },
+    { import = "text" },
+    { import = "tools" },
+    { import = "ui" },
+})
 
--- set the background color to match the editor theme
+require("general.autocmds")
+
+-- -- set the background color to match the editor theme
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi NvimTreeNormal guibg=NONE ctermbg=NONE")
 

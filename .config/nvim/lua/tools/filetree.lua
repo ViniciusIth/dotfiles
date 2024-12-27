@@ -58,16 +58,11 @@ return {
         "nvim-tree/nvim-web-devicons",
     },
     config = function()
+        -- OpenpNvimTree
+        vim.keymap.set("n", "<leader>pv", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+
         require("nvim-tree").setup {
             on_attach = my_on_attach,
-
-            -- Must be set so that nvim-tree can sync with telescope git switch
-            -- sync_root_with_cwd = true,
-            -- respect_buf_cwd = true,
-            -- update_focused_file = {
-            --     enable = true,
-            --     update_root = true
-            -- },
         }
     end,
 }
