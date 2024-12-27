@@ -130,3 +130,7 @@ export async function bash(
         return "";
     });
 }
+
+export async function notify(title: string, message: string, urgency = "normal") {
+    await execAsync(`notify-send -u ${urgency} "${title}" "${message}"`);
+}
