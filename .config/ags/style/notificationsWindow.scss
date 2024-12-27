@@ -20,8 +20,10 @@
 
 .notifications-window__clear {
   background: none;
-  padding: 6px 0;
+  padding: 3px 6px;
   margin-right: 18px;
+  background-color: colors.$surface_transparent;
+  color: colors.$on_surface;
 }
 
 .notifications-window__list {

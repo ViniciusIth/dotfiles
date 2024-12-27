@@ -33,8 +33,6 @@ class BrightnessService {
 
         if (percent > 1) percent = 1;
 
-        log(percent.toString());
-
         execAsync(`brightnessctl set ${Math.ceil(percent * 100)}% -q`).then(
             () => {
                 this.#screen.set(percent);

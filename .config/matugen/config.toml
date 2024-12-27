@@ -7,10 +7,6 @@ input_path = '~/.config/matugen/templates/hyprland.conf'
 output_path = '~/.config/hypr/colors.conf'
 post_hook = 'hyprctl reload'
 
-[templates.walker]
-input_path = '~/.config/matugen/templates/walker.css'
-output_path = '~/.config/walker/themes/default.css'
-
 [config.wallpaper]
 set = true
 command = "swww"

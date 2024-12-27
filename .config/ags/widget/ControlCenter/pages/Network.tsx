@@ -27,7 +27,6 @@ const checkStoredPassword = async (ssid: string): Promise<boolean> => {
 
 const actions = {
     connect: async (ap: AstalNetwork.AccessPoint) => {
-        console.log(hasPassword(ap))
         if (ap.rsnFlags) {
             const hasStoredPassword = await checkStoredPassword(ap.ssid);
             if (hasStoredPassword) {
