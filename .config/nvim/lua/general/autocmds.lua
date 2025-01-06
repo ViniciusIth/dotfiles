@@ -19,11 +19,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "NvimTree_*",
     callback = function()
         local buf = vim.api.nvim_get_current_buf()
-        local is_empty = vim.fn.empty(vim.fn.filter(vim.api.nvim_list_bufs(), 'v:val != '..buf)) == 1
+        local is_empty = vim.fn.empty(vim.fn.filter(vim.api.nvim_list_bufs(), 'v:val != ' .. buf)) == 1
 
         -- Se o nvim-tree for o único buffer aberto, ele fecha normalmente
         if is_empty then
             vim.cmd("quit")
         end
+    end,
+})
+
+-- Changes settings when editting a markdown file
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.wrap = true
+        -- vim.opt_local.spell = true
     end,
 })
