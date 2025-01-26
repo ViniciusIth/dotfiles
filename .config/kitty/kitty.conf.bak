@@ -1806,8 +1806,6 @@ include ./themes/matugen.conf
 
 #: Keyboard shortcuts {{{
 
-map kitty_mod+t new_tab_with_cwd
-
 #: Keys are identified simply by their lowercase Unicode characters.
 #: For example: a for the A key, [ for the left square bracket key,
 #: etc. For functional keys, such as Enter or Escape, the names are
@@ -2530,9 +2528,3 @@ map kitty_mod+t new_tab_with_cwd
 #: }}}
 
 #: }}}
-
-
-# BEGIN_KITTY_THEME
-# Matugen
-include current-theme.conf
-# END_KITTY_THEME
