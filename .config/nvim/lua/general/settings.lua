@@ -17,6 +17,7 @@ o.expandtab = true
 -- Enable line numbers
 o.number = true
 o.relativenumber = true
+vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
 
 -- Misc
 o.ignorecase = true
@@ -26,4 +27,3 @@ o.hlsearch = false
 o.showmode = false
 o.scrolloff = 4
 o.splitright = true
-

@@ -27,4 +27,4 @@ require("general.autocmds")
 -- -- set the background color to match the editor theme
 vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
 vim.cmd("hi NvimTreeNormal guibg=NONE ctermbg=NONE")
-
+vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })

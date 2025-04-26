@@ -121,7 +121,7 @@ return {
             require("mason-lspconfig").setup_handlers {
                 -- Handler padrão para servidores simples
                 function(server_name)
-                    require("lspconfig")[server_name].setup({
+                    lspconfig[server_name].setup({
                         capabilities = capabilities,
                         on_attach = on_attach
                     })
@@ -129,32 +129,21 @@ return {
 
                 -- Configurações manuais para servidores mais complexos
                 ["lua_ls"] = function()
-                    require("lspconfig").lua_ls.setup(require("lsp.servers.lua_ls")(capabilities, on_attach))
+                    lspconfig.lua_ls.setup(require("lsp.servers.lua_ls")(capabilities, on_attach))
                 end,
                 ["gopls"] = function()
-                    require("lspconfig").gopls.setup(require("lsp.servers.gopls")(capabilities, on_attach))
+                    lspconfig.gopls.setup(require("lsp.servers.gopls")(capabilities, on_attach))
                 end,
                 ["emmet_language_server"] = function()
-                    require("lspconfig").emmet_language_server.setup(require("lsp.servers.emmet")(capabilities, on_attach))
+                    lspconfig.emmet_language_server.setup(require("lsp.servers.emmet")(capabilities, on_attach))
                 end,
                 ["ts_ls"] = function()
-                    require("lspconfig").ts_ls.setup(require("lsp.servers.tsls")(capabilities, on_attach))
+                    lspconfig.ts_ls.setup(require("lsp.servers.tsls")(capabilities, on_attach))
                 end,
                 ["rust_analyzer"] = function()
-                    require("lspconfig").rust_analyzer.setup(require("lsp.servers.rust")(capabilities, on_attach))
+                    lspconfig.rust_analyzer.setup(require("lsp.servers.rust")(capabilities, on_attach))
                 end,
             }
-        end
-    },
-
-    { -- Allows having lsp features inside markdown documents
-        'jmbuhr/otter.nvim',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-        },
-        config = function()
-            local otter = require("otter")
-            vim.keymap.set("n", "<leader>moa", otter.activate, { desc = "[m]arkdown [o]tter [a]ctivate" })
         end
     },
 }

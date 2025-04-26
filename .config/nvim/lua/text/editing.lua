@@ -27,7 +27,7 @@ return {
             -- Add or skip adding a new cursor by matching symbol/selection
             set({ "n", "v" }, "<C-j>",
                 function() mc.matchAddCursor(1) end, { desc = "Add cursor to next symbol" })
-            set({ "n", "v" }, "<C-J>",
+            set({ "n", "v" }, "<C-k>",
                 function() mc.matchAddCursor(-1) end, { desc = "Add cursor at previous symbol" })
 
             -- Add all matches in the document
