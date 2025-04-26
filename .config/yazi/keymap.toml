@@ -23,3 +23,7 @@ on  = "<C-n>"
 run = '''
     shell 'ripdrag "$@" -xn 2>/dev/null &' --confirm
 '''
+
+[[manager.prepend_keymap]]
+on  = "M"
+run = "plugin mount"
