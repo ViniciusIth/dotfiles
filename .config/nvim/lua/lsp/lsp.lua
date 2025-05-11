@@ -1,8 +1,8 @@
 return {
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         dependencies = {
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
         },
         config = function()
@@ -111,7 +111,6 @@ return {
             capabilities.textDocument.completion.completionItem.snippetSupport = true
 
             -- Change the Diagnostic symbols in the sign column (gutter)
-            -- (not in youtube nvim video)
             local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
             for type, icon in pairs(signs) do
                 local hl = "DiagnosticSign" .. type
@@ -121,6 +120,7 @@ return {
             require("mason-lspconfig").setup_handlers {
                 -- Handler padrão para servidores simples
                 function(server_name)
+                    -- Print server name
                     lspconfig[server_name].setup({
                         capabilities = capabilities,
                         on_attach = on_attach

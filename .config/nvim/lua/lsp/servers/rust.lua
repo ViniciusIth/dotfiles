@@ -18,7 +18,6 @@ return function(capabilities, on_attach)
                 autoImportCompletions = false,
                 reportMissingImports = true,
                 followImportForHints = true,
-
                 cargo = {
                     allFeatures = true,
                 },
