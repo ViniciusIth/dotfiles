@@ -1,22 +1,7 @@
-# use keychain to not need to reenter ssh-add
-eval `keychain --eval --agents ssh git_ed25519`
-
-
-
 ## Zsh
 # Allow for some cool tricks
 setopt extended_glob
-# # The following lines were added by compinstall
-zstyle :compinstall filename '/home/viniciusith/.zshrc'
-
-autoload -Uz compinit
-compinit
-# # End of lines added by compinstall
-export XDG_CONFIG_HOME="$HOME/.config"
-# Default editor
-export EDITOR=nvim
-# Zsh-Autosuggestion
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+zstyle ':plugin:ez-compinit' 'compstyle' 'zshzoo'
 # Zsh HISTORY
 HISTFILE=~/.local/share/zsh_history
 HISTSIZE=10000
@@ -32,28 +17,16 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt SHARE_HISTORY             # Share history between all sessions.
 # END HISTORY
 
-# System level paths
-export PATH=$PATH:~/.local/share/lsp/bin
-export PATH=$PATH:~/.local/scripts
-export PATH=$PATH:~/go/bin
-export PATH=$PATH:/opt/nvim-linux64/bin
-export PATH=$PATH:~/.cargo/bin
+eval "$(zellij setup --generate-auto-start zsh)"
 
-# JDK
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk/bin
-export PATH=$PATH:$JAVA_HOME/bin
+# use keychain to not need to reenter ssh-add
+eval `keychain --eval --agents ssh git_ed25519`
 
 
-# bun completions
-[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
-
-# Node
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-export DENO_INSTALL="/home/viniciusith/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-if [ "$TMUX" = "" ]; then tmux; fi
+# source antidote
+source $ZDOTDIR/.antidote/antidote.zsh
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
 
 # Yazi wrapper
 function yy() {
@@ -65,10 +38,25 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
+#   ii:  display useful host related informaton
+#   -------------------------------------------------------------------
+ii() {
+    echo -e "\nYou are logged on ${RED}$HOST"
+    echo -e "\nAdditionnal information:$NC " ; uname -a
+    echo -e "\n${RED}Users logged on:$NC " ; w -h
+    echo -e "\n${RED}Current date :$NC " ; date
+    echo -e "\n${RED}Machine stats :$NC " ; uptime
+    echo -e "\n${RED}Current network location :$NC " ; scselect
+    echo -e "\n${RED}Public facing IP Address :$NC " ; myip
+    # echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
+    echo
+}
+
 # Run fastfetch
 fastfetch
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
+autoload -Uz promptinit && promptinit && prompt pure
+
