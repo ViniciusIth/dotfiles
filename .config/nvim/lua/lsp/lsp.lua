@@ -11,7 +11,6 @@ return {
 
             -- import mason-lspconfig
             local mason_lspconfig = require("mason-lspconfig")
-
             local mason_tool_installer = require("mason-tool-installer")
 
             -- enable mason and configure icons
@@ -137,13 +136,50 @@ return {
                 ["emmet_language_server"] = function()
                     lspconfig.emmet_language_server.setup(require("lsp.servers.emmet")(capabilities, on_attach))
                 end,
-                ["ts_ls"] = function()
-                    lspconfig.ts_ls.setup(require("lsp.servers.tsls")(capabilities, on_attach))
-                end,
                 ["rust_analyzer"] = function()
                     lspconfig.rust_analyzer.setup(require("lsp.servers.rust")(capabilities, on_attach))
                 end,
             }
         end
+    },
+    {
+        "pmizio/typescript-tools.nvim",
+        -- Ensure it loads for relevant filetypes and after nvim-lspconfig
+        ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "neovim/nvim-lspconfig", -- ⭐ Make it depend on nvim-lspconfig
+        },
+        config = function()
+            local on_attach = function(_ --[[ client ]], bufnr)
+                local keymap = vim.keymap
+                local opts = { noremap = true, silent = true, buffer = bufnr }
+
+                vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+
+                keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+                keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+                keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+                keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+                keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+                keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+                keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+                keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+                keymap.set("n", "K", vim.lsp.buf.hover, opts)
+                keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+                keymap.set("n", "<leader>gf", function()
+                    vim.lsp.buf.format { async = true }
+                end, opts)
+            end
+
+            require("typescript-tools").setup {
+                on_attach = on_attach,
+                settings = {
+                    separate_diagnostic_server = true,
+                    expose_as_code_action = "all",
+                    tsserver_plugins = {},
+                },
+            }
+        end,
     },
 }
