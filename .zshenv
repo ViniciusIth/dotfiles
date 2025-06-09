@@ -1,4 +1,6 @@
 export PATH="$HOME/.local/bin:$PATH"
+export PATH=$PATH:~/.linuxbrew/bin
+export PATH=$PATH:/usr/local/go/bin
 
 . "$HOME/.cargo/env";
 

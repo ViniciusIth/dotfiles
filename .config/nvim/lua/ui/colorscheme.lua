@@ -9,7 +9,6 @@ return {
             { "catppuccin/nvim",               opts = { transparent = true, }, name = "catppuccin" },
             { "folke/tokyonight.nvim",         opts = { transparent = true, }, },
             { "rebelot/kanagawa.nvim",         opts = { transparent = true, }, },
-            { "scottmckendry/cyberdream.nvim", opts = { transparent = true, }, },
             { "sainnhe/gruvbox-material",      opts = { transparent = true, }, },
         },
     },

@@ -17,11 +17,9 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt SHARE_HISTORY             # Share history between all sessions.
 # END HISTORY
 
-eval "$(zellij setup --generate-auto-start zsh)"
-
-# use keychain to not need to reenter ssh-add
-eval `keychain --eval --agents ssh git_ed25519`
-
+if [[ -z "$ZELLIJ_SESSION_NAME" ]]; then
+    zellij attach --index 0
+fi
 
 # source antidote
 source $ZDOTDIR/.antidote/antidote.zsh
@@ -52,11 +50,10 @@ ii() {
     echo
 }
 
-# Run fastfetch
-fastfetch
-
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 eval "$(zoxide init zsh)"
 autoload -Uz promptinit && promptinit && prompt pure
 
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
