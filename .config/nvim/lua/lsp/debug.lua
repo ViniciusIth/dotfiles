@@ -6,7 +6,6 @@ return {
         },
         lazy = true,
         config = function()
-            require("dapui").setup()
             require("nvim-dap-virtual-text").setup()
         end,
         keys = {
