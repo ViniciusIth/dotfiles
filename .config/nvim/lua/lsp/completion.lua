@@ -1,6 +1,7 @@
 return {
     {
         'Exafunction/codeium.vim',
+        enabled = false,
         event = "BufEnter",
         config = function()
             vim.g.codeium_disable_bindings = 1
@@ -65,19 +66,20 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.close(),
-                    ['<CR>'] = cmp.mapping(function(fallback)
+                    ["<CR>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
-                            if luasnip.expandable() then
-                                luasnip.expand()
+                            local entry = cmp.get_selected_entry()
+                            if entry then
+                                cmp.confirm({ select = false })
                             else
-                                cmp.confirm({
-                                    select = true,
-                                })
+                                fallback()
                             end
+                        elseif luasnip.expandable() then
+                            luasnip.expand()
                         else
                             fallback()
                         end
-                    end),
+                    end, { "i", "s" }),
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
