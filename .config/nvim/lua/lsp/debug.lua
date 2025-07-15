@@ -30,8 +30,9 @@ return {
         "igorlfs/nvim-dap-view",
         dependencies = { "mfussenegger/nvim-dap" },
         lazy = true,
-        opts = {},
         config = function(_, opts)
+            require("dap-view").setup(opts)
+
             local dap, dv = require("dap"), require("dap-view")
             dap.listeners.before.attach["dap-view-config"] = function()
                 dv.open()
@@ -45,11 +46,9 @@ return {
             dap.listeners.before.event_exited["dap-view-config"] = function()
                 dv.close()
             end
-
-            require("dap-view").setup(opts)
         end,
         keys = {
-            { "<leader>du", function() require("dap-view").toggle({}) end, desc = "Dap UI" },
+            { "<leader>du", function() require("dap-view").toggle() end, desc = "Dap UI" },
         }
     },
     {

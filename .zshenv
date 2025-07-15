@@ -2,7 +2,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:~/.linuxbrew/bin
 export PATH=$PATH:/usr/local/go/bin
 
-. "$HOME/.cargo/env";
+# . "$HOME/.cargo/env";
 
 export ZDOTDIR="$HOME/.config/zsh";
 
@@ -22,7 +22,7 @@ export PATH=$PATH:/opt/nvim-linux64/bin
 export PATH=$PATH:~/.cargo/bin
 
 # JDK
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk/bin
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 export PATH=$PATH:$JAVA_HOME/bin
 
 # bun completions

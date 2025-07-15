@@ -6,6 +6,7 @@ zstyle ':plugin:ez-compinit' 'compstyle' 'zshzoo'
 HISTFILE=~/.local/share/zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+bindkey -e
 setopt appendhistory
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.

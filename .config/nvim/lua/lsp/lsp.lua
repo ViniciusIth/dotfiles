@@ -108,6 +108,10 @@ return {
             -- used to enable autocompletion (assign to every lsp server config)
             local capabilities = cmp_nvim_lsp.default_capabilities()
             capabilities.textDocument.completion.completionItem.snippetSupport = true
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true
+            }
 
             -- Change the Diagnostic symbols in the sign column (gutter)
             local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
