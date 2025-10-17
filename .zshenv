@@ -1,8 +1,8 @@
 export PATH="$HOME/.local/bin:$PATH"
-export PATH=$PATH:~/.linuxbrew/bin
+export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export PATH=$PATH:/usr/local/go/bin
 
-# . "$HOME/.cargo/env";
+. "$HOME/.cargo/env";
 
 export ZDOTDIR="$HOME/.config/zsh";
 

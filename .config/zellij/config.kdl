@@ -18,6 +18,7 @@ keybinds clear-defaults=true {
         bind "l" { MoveFocus "right"; }
         bind "n" { NewPane; SwitchToMode "locked"; }
         bind "p" { SwitchToMode "normal"; }
+        bind "s" { NewPane "stacked"; SwitchToMode "locked"; }
         bind "r" { NewPane "right"; SwitchToMode "locked"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
@@ -217,11 +218,11 @@ keybinds clear-defaults=true {
     }
 }
 
-// Plugin aliases - can be used to change the implementation of Zellij
-// changing these requires a restart to take effect
 plugins {
     about location="zellij:about"
-    compact-bar location="zellij:compact-bar"
+    compact-bar location="zellij:compact-bar" {
+        tooltip "F1"
+    }
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
         cwd "/"
@@ -232,7 +233,7 @@ plugins {
     strider location="zellij:strider"
     tab-bar location="zellij:tab-bar"
     welcome-screen location="zellij:session-manager" {
-        welcome_screen true
+        welcome_screen false
     }
 }
 
@@ -270,7 +271,7 @@ default_mode "locked"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "compact"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -365,7 +366,7 @@ pane_frames false
 // if it is already running or creates it otherwise.
 // Default: false
 // 
-// attach_to_session true
+attach_to_session true
  
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:

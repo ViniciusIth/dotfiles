@@ -18,14 +18,21 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt SHARE_HISTORY             # Share history between all sessions.
 # END HISTORY
 
-if [[ -z "$ZELLIJ_SESSION_NAME" ]]; then
-    zellij attach --index 0
+if [[ -z "$ZELLIJ" ]]; then
+    if [[ "$ZELLIJ_AUTO_ATTACH" == "true" ]]; then
+        zellij attach -c
+    else
+        zellij
+    fi
+
+    if [[ "$ZELLIJ_AUTO_EXIT" == "true" ]]; then
+        exit
+    fi
 fi
 
-# source antidote
 source $ZDOTDIR/.antidote/antidote.zsh
-# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load
+compdef _git-switch git-swp
 
 # Yazi wrapper
 function yy() {
@@ -35,6 +42,27 @@ function yy() {
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
+}
+
+function ls() {
+  eza --icons --group-directories-first "$@"
+}
+
+function lo() {
+  eza -l --icons --group-directories-first "$@"
+}
+
+lt() {
+  local depth=2
+  if [[ $# -gt 0 ]]; then
+    depth=$1
+    shift
+  fi
+  eza --tree --level=$depth --icons --group-directories-first "$@"
+}
+
+function lg() {
+  eza -l --git --icons --group-directories-first "$@"
 }
 
 #   ii:  display useful host related informaton
@@ -56,5 +84,9 @@ autoload -Uz promptinit && promptinit && prompt pure
 
 
 export NVM_DIR="$HOME/.config/nvm"
+export PATH="$PATH:$(go env GOPATH)/bin"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun completions
+[ -s "/home/viniciusith/.bun/_bun" ] && source "/home/viniciusith/.bun/_bun"
