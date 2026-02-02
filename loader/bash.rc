@@ -1,0 +1,13 @@
+BASH_CONFIG_DIR="$HOME/.config/bash"
+
+case $- in
+  *i*) ;;
+  *) return ;;
+esac
+
+if [ -d "$BASH_CONFIG_DIR" ]; then
+  for file in "$BASH_CONFIG_DIR"/*.bash; do
+    [ -r "$file" ] && . "$file"
+  done
+fi
+

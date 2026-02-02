@@ -1,0 +1,70 @@
+[user]
+  name = Vinicius Ithalo
+  email = viniciusith@yahoo.com
+
+[core]
+  autocrlf = input
+  ignorecase = false
+  eol = lf
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[alias]
+  ci = commit
+  ck = checkout
+  ckb = checkout -b
+  pullo = pull --ff-only
+  pullr = pull --rebase
+  bc = branch -avv
+  st = status
+  cr = cherry-pick
+  mgnoff = merge --no-ff
+  mgsquash = merge --squash
+
+  lg = log --color --graph --pretty=format:%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an%Creset %C(yellow)(%ar)%C(bold blue)>%Creset --abbrev-commit
+  lg1 = lg -10
+  lg2 = lg -20
+  lg5 = lg -50
+
+  stl = stash list --pretty=format:%C(cyan)%gd%Cred: %C(yellow)%s
+  swp = !f() { git switch "$1" && git pull; }; f
+
+[diff]
+  tool = nvim
+
+[merge]
+  tool = nvim
+
+[difftool "nvim"]
+  cmd = nvim -d "$LOCAL" "$REMOTE"
+
+[mergetool "nvim"]
+  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c 'wincmd w'
+  prompt = false
+  keepBackup = false
+
+[push]
+  default = current
+
+[init]
+  defaultBranch = main
+
