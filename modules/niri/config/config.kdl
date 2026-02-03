@@ -1,4 +1,3 @@
-// https://yalter.github.io/niri/Configuration:-Input
 input {
     keyboard {
         xkb {
@@ -31,7 +30,6 @@ layout {
         proportion 0.66667
     }
 
-    // If you leave the brackets empty, the windows themselves will decide their initial width.
     default-column-width { proportion 0.66667; }
 
     focus-ring {
@@ -57,19 +55,12 @@ layout {
     }
 }
 
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-spawn-sh-at-startup "noctalia-shell"
-
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     // skip-at-startup
 }
 
-// Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
-// This option will also fix border/focus ring drawing behind some semitransparent windows.
-// After enabling or disabling this, you need to restart the apps for this to take effect.
+// Ask the clients to omit client-side decorations if possible.
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -78,6 +69,12 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
+}
+
+// Steam notifs
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
 }
 
 // Example: block out two password managers from screen capture.
@@ -308,14 +305,6 @@ binds {
     // rather than stacked on top of each other.
     Mod+W { toggle-column-tabbed-display; }
 
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
-
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
@@ -338,7 +327,9 @@ binds {
     // moving the mouse or pressing any other key.
     // Mod+Shift+P { power-off-monitors; }
 
-
-
     Mod+A { spawn-sh "qs ipc call launcher toggle"; }
 }
+
+include "dms/binds.kdl"
+include "dms/outputs.kdl"
+include "dms/cursor.kdl"

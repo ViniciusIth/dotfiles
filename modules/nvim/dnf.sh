@@ -37,7 +37,6 @@ fi
 
 mkdir -p "$USER_HOME/.config"
 
-# Copy config directory (not symlink)
 ln -s "$CONFIG_SRC" "$CONFIG_DST"
 
 # Fix ownership if run under sudo
