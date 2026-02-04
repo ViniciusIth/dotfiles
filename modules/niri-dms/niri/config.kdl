@@ -1,4 +1,6 @@
 input {
+    disable-power-key-handling
+
     keyboard {
         xkb {
             layout "us"
@@ -7,7 +9,11 @@ input {
     }
 
     touchpad {
-        off
+        disabled-on-external-mouse
+        tap
+
+        natural-scroll
+        scroll-method "edge"
     }
 
     mouse {
@@ -42,21 +48,10 @@ layout {
         off
     }
 
-    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
-    // You can think of them as a kind of outer gaps. They are set in logical pixels.
-    // Left and right struts will cause the next window to the side to always be visible.
-    // Top and bottom struts will simply add outer gaps in addition to the area occupied by
-    // layer-shell panels and regular gaps.
-    struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
     }
 }
 
 hotkey-overlay {
-    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     // skip-at-startup
 }
 
@@ -97,38 +92,27 @@ window-rule {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-    Mod+D hotkey-overlay-title="Open app launcher" { spawn-sh "noctalia-shell ipc call launcher toggle"; }
-    Mod+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
-
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
-    // Example media keys mapping using playerctl.
-    // This will work with any MPRIS-enabled media player.
     XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
     XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
     XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
     XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
-    // Example brightness key mappings for brightnessctl.
-    // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
-    // but you need to manually put each argument in separate "" quotes.
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    XF86PowerOff allow-when-locked=true { }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
-
     Mod+Q repeat=false { close-window; }
     
-
     Mod+H    { focus-column-or-monitor-left; }
     Mod+J    { focus-window-or-workspace-down; }
     Mod+K    { focus-window-or-workspace-up; }
@@ -162,14 +146,6 @@ binds {
     Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
-
-    // And you can also move a whole workspace to another monitor:
-    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
-    // ...
-
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
     Mod+U              { focus-workspace-down; }
@@ -178,10 +154,6 @@ binds {
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
     Mod+Ctrl+I         { move-column-to-workspace-up; }
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
-    // ...
 
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
@@ -220,35 +192,14 @@ binds {
     // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
     // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
 
-    // You can refer to workspaces by index. However, keep in mind that
-    // niri is a dynamic workspace system, so these commands are kind of
-    // "best effort". Trying to refer to a workspace index bigger than
-    // the current workspace count will instead refer to the bottommost
-    // (empty) workspace.
-    //
-    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
-    // will all refer to the 3rd workspace.
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
     Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
     Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+1 { move-window-to-workspace 1; }
 
     // Switches focus between the current and the previous workspace.
     // Mod+Tab { focus-workspace-previous; }
@@ -259,27 +210,14 @@ binds {
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
 
-    // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
-
     Mod+R { switch-preset-column-width; }
-    // Cycling through the presets in reverse order is also possible.
-    // Mod+R { switch-preset-column-width-back; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
-
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
     Mod+Shift+C { center-column; }
-
-    // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
 
     // Finer width adjustments.
     // This command can also:
@@ -317,19 +255,20 @@ binds {
     //
     // The allow-inhibiting=false property can be applied to other binds as well,
     // which ensures niri always processes them, even when an inhibitor is active.
-    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Backspace allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
+    Mod+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    // Mod+Shift+P { power-off-monitors; }
-
-    Mod+A { spawn-sh "qs ipc call launcher toggle"; }
+    Mod+Shift+P { power-off-monitors; }
 }
 
+include "dms/alttab.kdl"
 include "dms/binds.kdl"
-include "dms/outputs.kdl"
+include "dms/colors.kdl"
 include "dms/cursor.kdl"
+include "dms/layout.kdl"
+include "dms/outputs.kdl"
+include "dms/wpblur.kdl"

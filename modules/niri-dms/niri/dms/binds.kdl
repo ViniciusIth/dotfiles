@@ -1,0 +1,7 @@
+binds {
+    Mod+D hotkey-overlay-title="App Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Super+C hotkey-overlay-title="Clipboard: Toggle" { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
+    Super+Escape hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
+    XF86PowerOff hotkey-overlay-title="Open power menu" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
+}

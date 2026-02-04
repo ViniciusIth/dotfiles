@@ -1,9 +1,10 @@
 [user]
-  name = Vinicius Ithalo
+  name = Vinícius Ithalo
   email = viniciusith@yahoo.com
 
 [core]
   autocrlf = input
+  editor = nvim
   ignorecase = false
   eol = lf
 
@@ -39,14 +40,11 @@
   cr = cherry-pick
   mgnoff = merge --no-ff
   mgsquash = merge --squash
-
-  lg = log --color --graph --pretty=format:%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an%Creset %C(yellow)(%ar)%C(bold blue)>%Creset --abbrev-commit
+  lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an %Creset%C(yellow)(%ar)%C(bold blue)>%Creset' --abbrev-commit"
   lg1 = lg -10
   lg2 = lg -20
   lg5 = lg -50
-
-  stl = stash list --pretty=format:%C(cyan)%gd%Cred: %C(yellow)%s
-  swp = !f() { git switch "$1" && git pull; }; f
+  stl = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
 
 [diff]
   tool = nvim
@@ -57,10 +55,12 @@
 [difftool "nvim"]
   cmd = nvim -d "$LOCAL" "$REMOTE"
 
-[mergetool "nvim"]
-  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c 'wincmd w'
+[mergetool]
   prompt = false
   keepBackup = false
+
+[mergetool "nvim"]
+  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c wincmd\ w
 
 [push]
   default = current
