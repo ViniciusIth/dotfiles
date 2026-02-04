@@ -1,70 +1,85 @@
 [user]
-  name = Vinícius Ithalo
-  email = viniciusith@yahoo.com
+    name = Vinícius Ithalo
+    email = viniciusith@yahoo.com
 
 [core]
-  autocrlf = input
-  editor = nvim
-  ignorecase = false
-  eol = lf
+	autocrlf = input
+	editor = nvim
+	ignorecase = false
+	eol = lf
 
 [color]
-  branch = auto
-  diff = auto
-  status = auto
+	branch = auto
+	diff = auto
+	status = auto
 
 [color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
 
 [color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 
 [alias]
-  ci = commit
-  ck = checkout
-  ckb = checkout -b
-  pullo = pull --ff-only
-  pullr = pull --rebase
-  bc = branch -avv
-  st = status
-  cr = cherry-pick
-  mgnoff = merge --no-ff
-  mgsquash = merge --squash
-  lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an %Creset%C(yellow)(%ar)%C(bold blue)>%Creset' --abbrev-commit"
-  lg1 = lg -10
-  lg2 = lg -20
-  lg5 = lg -50
-  stl = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
+	pullo = pull --ff-only
+	pullr = pull --rebase
+
+	branchall = branch -avv
+	stashes = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
+
+    unstage = reset -q HEAD --
+    discard = checkout --
+    uncommit = reset --mixed HEAD~
+    nevermind = !git reset --hard HEAD && git clean -d -f
+
+	lg = "log --color --graph --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an (%ar)%Creset%C(bold blue)>%Creset%C(cyan)%d%Creset' --abbrev-commit" 
+	lg1 = lg -10
+	lg2 = lg -20
+	lg5 = lg -50
+    review = "!f() { git log -p --reverse \"$@\" origin/main...HEAD; }; f"
+
+    # Ignore files even in upstream, usefull when you don't want to put in gitignore,
+    # can get confusing if you forget about the feature.
+    ignore = update-index --skip-worktree
+    unignore = update-index --no-skip-worktree
+    ignored = ! git ls-files -v . | grep ^S
+
+    # host and whost ("writable host") for quickly hosting a repository via git://. 
+    # The latter accepts pushes, so don't expose it to the internet. 
+    # Useful for quickly moving commits between machines without common SSH access. 
+    host = daemon --base-path=. --reuseaddr --export-all
+    whost = daemon --base-path=. --reuseaddr --export-all --enable=receive-pack
 
 [diff]
-  tool = nvim
-
-[merge]
-  tool = nvim
+	tool = nvim
 
 [difftool "nvim"]
-  cmd = nvim -d "$LOCAL" "$REMOTE"
+    cmd = nvim -d "$LOCAL" "$REMOTE"
+
+[merge]
+	tool = nvim
 
 [mergetool]
-  prompt = false
-  keepBackup = false
+	prompt = false
+	keepBackup = false
 
 [mergetool "nvim"]
-  cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c wincmd\ w
+    cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c wincmd\ w
 
 [push]
   default = current
 
 [init]
-  defaultBranch = main
+    defaultBranch = main
 
+[branch]
+	sort = -committerdate
