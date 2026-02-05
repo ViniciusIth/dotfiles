@@ -104,17 +104,31 @@ func runModule(m module) {
 	}
 }
 
+func detectSystemPM() string {
+	for _, pm := range []string{"pacman", "dnf", "apt", "brew"} {
+		if _, err := exec.LookPath(pm); err == nil {
+			return pm
+		}
+	}
+	return ""
+}
+
 func detectInstaller(path string) string {
-	for _, d := range []string{"dnf", "apt", "pacman", "brew"} {
-		p := filepath.Join(path, d+".sh")
+	pm := detectSystemPM()
+	fmt.Printf("  detected package manager: %s\n", pm)
+
+	if pm != "" {
+		p := filepath.Join(path, pm+".sh")
 		if exists(p) {
 			return p
 		}
 	}
+
 	p := filepath.Join(path, "install.sh")
 	if exists(p) {
 		return p
 	}
+
 	return ""
 }
 
