@@ -3,48 +3,48 @@
     email = viniciusith@yahoo.com
 
 [core]
-	autocrlf = input
-	editor = nvim
-	ignorecase = false
-	eol = lf
+    autocrlf = input
+    editor = nvim
+    ignorecase = false
+    eol = lf
 
 [color]
-	branch = auto
-	diff = auto
-	status = auto
+    branch = auto
+    diff = auto
+    status = auto
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 
 [alias]
-	pullo = pull --ff-only
-	pullr = pull --rebase
+    pullo = pull --ff-only
+    pullr = pull --rebase
 
-	branchall = branch -avv
-	stashes = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
+    branchall = branch -avv
+    stashes = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
 
     unstage = reset -q HEAD --
     discard = checkout --
     uncommit = reset --mixed HEAD~
     nevermind = !git reset --hard HEAD && git clean -d -f
 
-	lg = "log --color --graph --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an (%ar)%Creset%C(bold blue)>%Creset%C(cyan)%d%Creset' --abbrev-commit" 
-	lg1 = lg -10
-	lg2 = lg -20
-	lg5 = lg -50
+    lg = "log --color --graph --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an (%ar)%Creset%C(bold blue)>%Creset%C(cyan)%d%Creset' --abbrev-commit" 
+    lg1 = lg -10
+    lg2 = lg -20
+    lg5 = lg -50
     review = "!f() { git log -p --reverse \"$@\" origin/main...HEAD; }; f"
 
     # Ignore files even in upstream, usefull when you don't want to put in gitignore,
@@ -60,20 +60,20 @@
     whost = daemon --base-path=. --reuseaddr --export-all --enable=receive-pack
 
 [diff]
-	tool = nvim
+    tool = nvim
 
 [difftool "nvim"]
     cmd = nvim -d "$LOCAL" "$REMOTE"
 
 [merge]
-	tool = nvim
+    tool = nvim
 
 [mergetool]
-	prompt = false
-	keepBackup = false
+    prompt = false
+    keepBackup = false
 
 [mergetool "nvim"]
-    cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE" -c wincmd\ w
+    cmd = nvim -d $BASE $LOCAL $REMOTE -o $MERGED
 
 [push]
   default = current
@@ -82,4 +82,4 @@
     defaultBranch = main
 
 [branch]
-	sort = -committerdate
+    sort = -committerdate
