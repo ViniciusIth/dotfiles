@@ -45,11 +45,14 @@ else
   fi
 fi
 
+insta
+
 CONFIG_SRC="$MODULE_DIR/config"
 CONFIG_DST="$USER_HOME/.config/nvim"
 BACKUP_DST="$USER_HOME/.config/nvim.bak"
 
-echo "  installing config"
+echo "▶ Installing dependencies"
+sudo pacman -S --noconfirm tree-sitter-cli
 
 if [ -e "$CONFIG_DST" ] || [ -L "$CONFIG_DST" ]; then
   echo "  backing up existing nvim config → nvim.bak"
@@ -65,4 +68,5 @@ if [ -n "${SUDO_USER:-}" ]; then
 fi
 
 echo "✔ neovim installed"
+
 

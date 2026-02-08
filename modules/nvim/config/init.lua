@@ -46,7 +46,7 @@ vim.pack.add({
   
   {
     src = "https://github.com/saghen/blink.cmp", 
-    version = vim.version.range('*') 
+    version = 'v1.9.1',
   },
 })
 

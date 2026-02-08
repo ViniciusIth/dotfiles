@@ -48,7 +48,6 @@ layout {
         off
     }
 
-    }
 }
 
 hotkey-overlay {
@@ -105,7 +104,7 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    XF86PowerOff allow-when-locked=true { }
+    // XF86PowerOff allow-when-locked=true { }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,

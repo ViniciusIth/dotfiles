@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-MODULE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [ -n "${SUDO_USER:-}" ]; then
   TARGET_USER="$SUDO_USER"
@@ -78,8 +78,8 @@ link_config() {
   fi
 }
 
-link_config "niri" "$MODULE_DIR/niri/config"
-link_config "DankMaterialShell" "$MODULE_DIR/DankMaterialShell/config"
+link_config "niri" "$MODULE_DIR/niri"
+link_config "DankMaterialShell" "$MODULE_DIR/DankMaterialShell"
 
 echo "✔ niri + DMS configured"
 

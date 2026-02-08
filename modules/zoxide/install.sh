@@ -1,4 +1,3 @@
-#!/usr/bin/env sh
 set -eu
 
 MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -18,7 +17,7 @@ CARGO_BIN="$CARGO_HOME/bin"
 export CARGO_HOME
 export PATH="$CARGO_BIN:$PATH"
 
-echo "▶ Installing yazi for user: $TARGET_USER"
+echo "▶ Installing zoxide for user: $TARGET_USER"
 
 # Ensure rustup
 if [ ! -x "$CARGO_BIN/rustup" ]; then
@@ -39,39 +38,11 @@ else
   echo "▶ cargo-binstall already installed"
 fi
 
-# Install yazi
-if [ ! -x "$CARGO_BIN/yazi" ]; then
-  echo "▶ installing yazi (cargo binstall)"
-  sudo -u "$TARGET_USER" "$CARGO_BIN/cargo" binstall -y yazi-fm
+if [ ! -x "$CARGO_BIN/zoxide" ]; then
+  echo "▶ installing zoxide (cargo binstall)"
+  sudo -u "$TARGET_USER" "$CARGO_BIN/cargo" binstall -y zoxide
 else
-  echo "▶ yazi already installed"
+  echo "▶ zoxide already installed"
 fi
 
-# Install config (entire directory)
-CONFIG_SRC="$MODULE_DIR/config"
-CONFIG_DST="$USER_HOME/.config/yazi"
-BACKUP_DST="$USER_HOME/.config/yazi.bak"
-
-echo "▶ installing yazi config"
-
-mkdir -p "$USER_HOME/.config"
-
-if [ -e "$CONFIG_DST" ] || [ -L "$CONFIG_DST" ]; then
-  if [ "$(readlink "$CONFIG_DST" 2>/dev/null || true)" != "$CONFIG_SRC" ]; then
-    echo "  backing up existing config → yazi.bak"
-    mv "$CONFIG_DST" "$BACKUP_DST"
-  else
-    echo "  config already linked"
-    exit 0
-  fi
-fi
-
-ln -s "$CONFIG_SRC" "$CONFIG_DST"
-
-# Fix ownership if run under sudo
-if [ -n "${SUDO_USER:-}" ]; then
-  chown -h "$TARGET_USER:$TARGET_USER" "$CONFIG_DST"
-fi
-
-echo "✔ yazi installed"
-
+echo "✔  zoxide installed"

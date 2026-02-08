@@ -33,13 +33,13 @@
     pullo = pull --ff-only
     pullr = pull --rebase
 
-    branchall = branch -avv
-    stashes = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'q"
+	branchall = branch -avv
+	stashes = "stash list --pretty=format:'%C(cyan)%gd%Cred: %C(yellow)%s'"
 
     unstage = reset -q HEAD --
     discard = checkout --
     uncommit = reset --mixed HEAD~
-    nevermind = !git reset --hard HEAD && git clean -d -f
+    nevermind = "!git reset --hard HEAD && git clean -d -f"
 
     lg = "log --color --graph --pretty=format:'%Cred%h%Creset - %s %C(bold blue)<%an (%ar)%Creset%C(bold blue)>%Creset%C(cyan)%d%Creset' --abbrev-commit" 
     lg1 = lg -10
@@ -51,7 +51,7 @@
     # can get confusing if you forget about the feature.
     ignore = update-index --skip-worktree
     unignore = update-index --no-skip-worktree
-    ignored = ! git ls-files -v . | grep ^S
+    ignored = "!git ls-files -v . | grep ^S"
 
     # host and whost ("writable host") for quickly hosting a repository via git://. 
     # The latter accepts pushes, so don't expose it to the internet. 

@@ -3,7 +3,7 @@
   "currentThemeCategory": "dynamic",
   "customThemeFile": "",
   "registryThemeVariants": {},
-  "matugenScheme": "scheme-rainbow",
+  "matugenScheme": "scheme-content",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -58,6 +58,7 @@
   "controlCenterShowMicPercent": false,
   "controlCenterShowBatteryIcon": false,
   "controlCenterShowPrinterIcon": false,
+  "controlCenterShowScreenSharingIcon": true,
   "showPrivacyButton": true,
   "privacyShowMicIcon": false,
   "privacyShowCameraIcon": false,
@@ -303,7 +304,7 @@
   "notificationHistorySaveNormal": true,
   "notificationHistorySaveCritical": true,
   "osdAlwaysShowValue": true,
-  "osdPosition": 5,
+  "osdPosition": 3,
   "osdVolumeEnabled": true,
   "osdMediaVolumeEnabled": true,
   "osdBrightnessEnabled": true,
@@ -341,7 +342,13 @@
     ]
   },
   "showOnLastDisplay": {},
-  "niriOutputSettings": {},
+  "niriOutputSettings": {
+    "eDP-1": {
+      "layout": {
+        "alwaysCenterSingleColumn": true
+      }
+    }
+  },
   "hyprlandOutputSettings": {},
   "barConfigs": [
     {
@@ -397,11 +404,12 @@
       "fontScale": 1,
       "autoHide": false,
       "autoHideDelay": 250,
-      "openOnOverview": false,
+      "openOnOverview": true,
       "visible": true,
       "popupGapsAuto": true,
       "popupGapsManual": 4,
-      "maximizeDetection": true
+      "maximizeDetection": true,
+      "showOnWindowsOpen": false
     }
   ],
   "desktopClockEnabled": false,
@@ -527,11 +535,21 @@
           "y": 0.2777777777777778,
           "width": 320,
           "height": 480
+        },
+        "eDP-1": {
+          "width": 320,
+          "height": 480,
+          "x": 800,
+          "y": 360
         }
       }
     }
   ],
   "desktopWidgetGroups": [],
-  "builtInPluginSettings": {},
+  "builtInPluginSettings": {
+    "dms_settings_search": {
+      "trigger": "?"
+    }
+  },
   "configVersion": 5
 }

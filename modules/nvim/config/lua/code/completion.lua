@@ -14,7 +14,6 @@ blink.setup({
         ["<Tab>"] = { "select_next", "fallback" },
         ["<S-Tab>"] = { "select_prev", "fallback" },
     },
-
     completion = {
         documentation = {
             auto_show = true,
@@ -24,8 +23,13 @@ blink.setup({
             border = "rounded",
         },
     },
-
     signature = {
         enabled = true,
+    },
+    fuzzy = {
+        implementation = "prefer_rust", 
+          prebuilt_binaries = {
+            download = true,
+        }
     },
 })

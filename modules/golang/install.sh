@@ -24,14 +24,41 @@ echo "  downloading ${URL}"
 
 curl -fLo "$TMP" "$URL"
 
-echo "  removing old /usr/local/go"
-sudo rm -rf /usr/local/go
+# Detect existing go (if any)
+OLD_GO="$(command -v go || true)"
 
-echo "  extracting to /usr/local"
+if [ -n "$OLD_GO" ]; then
+  OLD_GO_ROOT="$(cd "$(dirname "$OLD_GO")/.." && pwd)"
+
+  case "$OLD_GO_ROOT" in
+    /usr/local/go|/usr/lib/go|/opt/go)
+      echo "▶ Removing old Go at $OLD_GO_ROOT"
+      sudo rm -rf "$OLD_GO_ROOT"
+      ;;
+    *)
+      echo "▶ Existing Go found at $OLD_GO (not removing)"
+      ;;
+  esac
+else
+  echo "▶ No existing Go found"
+fi
+
+echo "▶ Extracting Go to /usr/local"
 sudo tar -C /usr/local -xzf "$TMP"
 
-echo "  cleaning up"
+echo "▶ Cleaning up tarball"
 rm -f "$TMP"
 
-echo "✔ Go ${VERSION} installed successfully"
+# Re-resolve go (new install should be first on PATH)
+GO_BIN="$(command -v go)"
+
+echo "▶ Using Go at $GO_BIN"
+
+# Install gopls using the resolved go
+echo "▶ Installing gopls"
+sudo env \
+  GOBIN=/usr/local/bin \
+  "$GO_BIN" install golang.org/x/tools/gopls@latest
+
+echo "✔ Go ${VERSION} and gopls installed successfully"
 
