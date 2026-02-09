@@ -1,5 +1,11 @@
 local telescope = require("telescope")
 local builtin = require("telescope.builtin")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local conf = require("telescope.config").values
+local builtin = require("telescope.builtin")
 
 telescope.setup({
     pickers = {
@@ -32,8 +38,43 @@ telescope.setup({
 })
 
 
-vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Telescope help tags" })
-vim.keymap.set('n', '<leader>ps', ":Telescope repo list<CR>", { silent = true, desc = "Telescope repo list" })
+local function search_hub()
+  local searches = {
+    { name = "Find files", run = builtin.find_files },
+    { name = "Live grep", run = builtin.live_grep },
+    { name = "Buffers", run = builtin.buffers },
+    { name = "Help tags", run = builtin.help_tags },
+    { name = "Functions / Methods (current file)", run = function()
+      builtin.lsp_document_symbols({
+        symbols = { "function", "method" },
+      })
+    end },
+    { name = "Workspace symbols", run = builtin.lsp_workspace_symbols },
+    { name = "Recent files", run = builtin.oldfiles },
+  }
+
+  pickers.new({}, {
+    prompt_title = "Search",
+    finder = finders.new_table({
+      results = searches,
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = entry.name,
+          ordinal = entry.name,
+        }
+      end,
+    }),
+    sorter = conf.generic_sorter({}),
+    attach_mappings = function(prompt_bufnr)
+      actions.select_default:replace(function()
+        local selection = action_state.get_selected_entry().value
+        actions.close(prompt_bufnr)
+        selection.run()
+      end)
+      return true
+    end,
+  }):find()
+end
+
+vim.keymap.set("n", "<leader>fs", search_hub, { desc = "Search hub" })
