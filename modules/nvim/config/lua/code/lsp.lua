@@ -6,6 +6,8 @@ vim.lsp.enable("qmlls")
 vim.lsp.enable("ruff")
 vim.lsp.enable("python")
 
+vim.lsp.enable("typescript")
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
         local client = vim.lsp.get_client_by_id(event.data.client_id)
