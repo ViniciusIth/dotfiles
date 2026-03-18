@@ -241,6 +241,19 @@ binds {
     // rather than stacked on top of each other.
     Mod+W { toggle-column-tabbed-display; }
 
+    Shift+Print hotkey-overlay-title="Toggle Screenrecording" {
+        spawn "sh" "-c" r#"
+            if pidof -x wf-recorder >/dev/null 2>&1; then
+                pkill -SIGINT -x wf-recorder \
+                  && notify-send -t 2000 -a "Screen Recording" "Screenrecord stopped"
+            else
+                file=/tmp/"screenrec-$(date +%s)".mp4
+                notify-send -t 2000 -a "Screen Recording" "Screenrecord starting..."
+                wf-recorder -g "$(slurp -b '#00000090')" -f "$file"
+                wl-copy "file:/$file" -t text/uri-list
+            fi
+        "#;
+    }
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }

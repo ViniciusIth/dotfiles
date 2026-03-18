@@ -11,11 +11,11 @@ else
   USER_HOME="$HOME"
 fi
 
-echo "▶ Installing niri + DMS"
+echo "▶ Installing niri + DMS and dependencies"
 
 if ! command -v dms >/dev/null 2>&1; then
   sudo dnf -y copr enable avengemedia/dms
-  sudo dnf -y install niri dms
+  sudo dnf -y install niri dms slurp wf-recorder
 fi
 
 if command -v systemctl >/dev/null 2>&1; then
@@ -49,8 +49,8 @@ link_config() {
   fi
 }
 
-link_config "niri" "$MODULE_DIR/niri/config"
-link_config "DankMaterialShell" "$MODULE_DIR/DankMaterialShell/config"
+link_config "niri" "$MODULE_DIR/niri-dms/niri"
+link_config "DankMaterialShell" "$MODULE_DIR/niri-dms/DankMaterialShell"
 
 echo "✔ niri + DMS configured"
 

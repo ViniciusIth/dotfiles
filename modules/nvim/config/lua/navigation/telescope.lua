@@ -43,6 +43,7 @@ local function search_hub()
     { name = "Find files", run = builtin.find_files },
     { name = "Live grep", run = builtin.live_grep },
     { name = "Buffers", run = builtin.buffers },
+    { name = "Diagnostics (Project)", run = builtin.diagnostics },
     { name = "Help tags", run = builtin.help_tags },
     { name = "Functions / Methods (current file)", run = function()
       builtin.lsp_document_symbols({

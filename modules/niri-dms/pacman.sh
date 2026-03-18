@@ -38,7 +38,9 @@ sudo pacman -Syu --needed --noconfirm \
   xwayland-satellite \
   xdg-desktop-portal-gnome \
   xdg-desktop-portal-gtk \
-  alacritty
+  alacritty \ 
+  wf-recorder \
+  slurp
 
 echo "▶ Installing AUR packages"
 sudo -u "$TARGET_USER" paru -S --needed --noconfirm \
