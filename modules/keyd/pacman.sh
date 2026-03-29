@@ -31,7 +31,7 @@ fi
 echo "▶ Deploying keyd config"
 
 echo "  using copying → /etc/keyd/default.conf"
-sudo cp "$CONFIG_SRC" "$CONFIG_DST"
+sudo ln -s "$CONFIG_SRC" "$CONFIG_DST"
 
 sudo chown root:root "$CONFIG_DST"
 sudo chmod 644 "$CONFIG_DST"

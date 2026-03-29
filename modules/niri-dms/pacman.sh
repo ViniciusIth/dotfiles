@@ -33,7 +33,7 @@ if ! command -v paru >/dev/null 2>&1; then
 fi
 
 echo "▶ Installing official packages"
-sudo pacman -Syu --needed --noconfirm \
+sudo pacman -Sy --needed --noconfirm \
   niri \
   xwayland-satellite \
   xdg-desktop-portal-gnome \

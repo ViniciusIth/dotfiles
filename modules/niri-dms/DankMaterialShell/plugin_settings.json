@@ -2,5 +2,17 @@
   "calculator": {
     "enabled": true,
     "trigger": "="
+  },
+  "dankBatteryAlerts": {
+    "enabled": true
+  },
+  "dankClight": {
+    "enabled": false
+  },
+  "dmsLenovoBatterySettings": {
+    "enabled": true
+  },
+  "powerOptions": {
+    "enabled": true
   }
 }

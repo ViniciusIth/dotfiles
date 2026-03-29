@@ -7,6 +7,7 @@ vim.lsp.enable("ruff")
 vim.lsp.enable("python")
 
 vim.lsp.enable("typescript")
+vim.lsp.enable("yaml")
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)
