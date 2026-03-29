@@ -38,7 +38,7 @@ sudo pacman -Sy --needed --noconfirm \
   xwayland-satellite \
   xdg-desktop-portal-gnome \
   xdg-desktop-portal-gtk \
-  alacritty \ 
+  alacritty \
   wf-recorder \
   slurp
 
