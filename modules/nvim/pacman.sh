@@ -45,8 +45,6 @@ else
   fi
 fi
 
-insta
-
 CONFIG_SRC="$MODULE_DIR/config"
 CONFIG_DST="$USER_HOME/.config/nvim"
 BACKUP_DST="$USER_HOME/.config/nvim.bak"

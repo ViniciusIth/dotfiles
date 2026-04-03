@@ -1,6 +1,9 @@
 local blink = require("blink.cmp")
 
 blink.setup({
+    sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+    },
     keymap = {
         preset = "default",
 

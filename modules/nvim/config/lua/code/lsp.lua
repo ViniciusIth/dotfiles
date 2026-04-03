@@ -2,6 +2,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("nil")
 vim.lsp.enable("qmlls")
+vim.lsp.enable("emmet-language-server")
 
 vim.lsp.enable("ruff")
 vim.lsp.enable("python")
