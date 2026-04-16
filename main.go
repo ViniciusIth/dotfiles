@@ -90,12 +90,13 @@ func runModule(m module) {
 	installer := detectInstaller(m.path)
 	if installer == "" {
 		fmt.Println("  no installer found, skipping")
-		return
+		goto LINK
 	}
 
 	fmt.Printf("  running %s\n", filepath.Base(installer))
 	runCmd(installer, m.path, m.name)
 
+LINK:
 	shell := filepath.Join(m.path, "shell.bash")
 	if exists(shell) {
 		dst := filepath.Join(os.Getenv("HOME"), ".config/bash", m.name+".bash")
