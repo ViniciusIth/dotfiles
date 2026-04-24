@@ -6,10 +6,8 @@ blink.setup({
     },
     keymap = {
         preset = "default",
-
         -- Trigger completion manually
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-
         -- Confirm selection
         ["<CR>"] = { "accept", "fallback" },
 
@@ -22,7 +20,12 @@ blink.setup({
             auto_show = true,
             auto_show_delay_ms = 100,
         },
+        ghost_text = {
+            enabled = true,
+            show_with_menu = false,
+        },
         menu = {
+            auto_show = false,
             border = "rounded",
         },
     },

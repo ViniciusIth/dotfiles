@@ -92,9 +92,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
         bindOpts.desc = "Show line diagnostics"
         vim.keymap.set("n", "<leader>bd", vim.diagnostic.open_float, bindOpts)
 
-        -- Lsp actions
-        bindOpts.desc = "See available code actions"
-        vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, bindOpts)
+        -- Lsp actions (use [gra] instead)
+        -- bindOpts.desc = "See available code actions"
+        -- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, bindOpts)
 
         bindOpts.desc = "Smart rename"
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bindOpts)
