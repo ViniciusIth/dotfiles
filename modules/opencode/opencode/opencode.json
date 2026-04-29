@@ -3,7 +3,12 @@
   "mcp": {
     "azure-devops": {
       "type": "local",
-      "command": ["npx", "-y", "@azure-devops/mcp", "neocom"],
+      "command": [
+        "npx",
+        "-y",
+        "@azure-devops/mcp",
+        "neocom"
+      ],
       "enabled": false
     },
     "postgres-dba": {

@@ -64,3 +64,26 @@ fi
 
 echo "✔ git configured"
 
+SSH_DIR="$USER_HOME/.ssh"
+SSH_CONFIG="$SSH_DIR/config"
+
+echo "▶ Configuring SSH agent behavior"
+
+mkdir -p "$SSH_DIR"
+chmod 700 "$SSH_DIR"
+
+touch "$SSH_CONFIG"
+chmod 600 "$SSH_CONFIG"
+
+if ! grep -q "AddKeysToAgent yes" "$SSH_CONFIG"; then
+  echo "  adding AddKeysToAgent to ssh config"
+  printf "\nHost *\n  AddKeysToAgent yes\n" >> "$SSH_CONFIG"
+else
+  echo "  AddKeysToAgent already set"
+fi
+
+if [ -n "${SUDO_USER:-}" ]; then
+  chown -R "$SUDO_USER:$SUDO_USER" "$SSH_DIR"
+fi
+
+echo "✔ ssh configured"
