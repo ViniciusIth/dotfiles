@@ -4,22 +4,22 @@ model: openai/gpt-5.3-codex
 mode: subagent
 hidden: true
 permissions:
-  bash: deny
+  bash:
+    - allow: "beans *"
+    - allow: "npm run build"
+    - allow: "go build ./..."
+    - allow: "bun run build"
+    - deny: "*"
   edit: deny
   write: deny
-  webfetch: deny
+  webfetch: allow
+  websearch: allow
   task: deny
   read: allow
   grep: allow
   glob: allow
   todoread: deny
   todowrite: deny
-  beads_claim: allow
-  beads_create: allow
-  beads_prime: deny
-  beads_ready: deny
-  beads_close: deny
-  beads_sync: deny
 ---
 You are a code review agent. Your only job is to review the specified implementation and report quality issues, risks, and improvement suggestions.
 
@@ -139,7 +139,6 @@ Return exactly these sections:
    - <short list or "none">
 
 ## Task Management
-- Use beads_claim on the task ID before doing any work
-- Use beads_create for follow-up improvements or issues you discover
+- Use beans to orient yourself
+- Use beans for follow-up improvements or issues you discover
 - NEVER use todowrite or todoread
-- Do NOT close the task

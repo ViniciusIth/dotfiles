@@ -7,5 +7,5 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 ufo.setup()
-vim.keymap.set('n', 'zR', ufo.openAllFolds)
-vim.keymap.set('n', 'zM', ufo.closeAllFolds)
+vim.keymap.set("n", "zR", ufo.openAllFolds)
+vim.keymap.set("n", "zM", ufo.closeAllFolds)
