@@ -2,16 +2,24 @@
     "$schema": "https://opencode.ai/config.json",
     "agent": {
         "plan": {
-            "disable": true
+            "disable": true,
+            "options": {},
+            "permission": {}
         },
         "build": {
-            "disable": true
+            "disable": true,
+            "options": {},
+            "permission": {}
         },
         "general": {
-            "disable": true
+            "disable": true,
+            "options": {},
+            "permission": {}
         },
         "explore": {
-            "disable": true
+            "disable": true,
+            "options": {},
+            "permission": {}
         }
     },
     "permission": {
