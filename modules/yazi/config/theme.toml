@@ -41,6 +41,6 @@ rules = [
 	{ mime = "application/x-rar",           fg = "#ffb4ab" },
 
 	# Fallback
-	{ name = "*", fg = "#8ad0ee", bold=true },
-	{ name = "*/", fg = "#b4cad5", bold=true }
+	{ url = "*",  fg = "#8ad0ee", bold=true },
+	{ url = "*/", fg = "#b4cad5", bold=true }
 ]

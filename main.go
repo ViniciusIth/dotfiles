@@ -88,13 +88,21 @@ func runModule(m module) {
 	fmt.Printf("\n▶ Installing %s\n", m.name)
 
 	installer := detectInstaller(m.path)
+	config := detectConfig(m.path)
+
 	if installer == "" {
 		fmt.Println("  no installer found, skipping")
 		goto LINK
 	}
-
 	fmt.Printf("  running %s\n", filepath.Base(installer))
 	runCmd(installer, m.path, m.name)
+
+	if config == "" {
+		fmt.Println("  no config found, skipping")
+		goto LINK
+	}
+	fmt.Printf("  running %s\n", filepath.Base(config))
+	runCmd(config, m.path, m.name)
 
 LINK:
 	shell := filepath.Join(m.path, "shell.bash")
@@ -115,17 +123,26 @@ func detectSystemPM() string {
 }
 
 func detectInstaller(path string) string {
-	pm := detectSystemPM()
-	fmt.Printf("  detected package manager: %s\n", pm)
+	// pm := detectSystemPM()
+	// fmt.Printf("  detected package manager: %s\n", pm)
 
-	if pm != "" {
-		p := filepath.Join(path, pm+".sh")
-		if exists(p) {
-			return p
-		}
+	// if pm != "" {
+	// 	p := filepath.Join(path, pm+".sh")
+	// 	if exists(p) {
+	// 		return p
+	// 	}
+	// }
+
+	p := filepath.Join(path, "local.sh")
+	if exists(p) {
+		return p
 	}
 
-	p := filepath.Join(path, "install.sh")
+	return ""
+}
+
+func detectConfig(path string) string {
+	p := filepath.Join(path, "config.sh")
 	if exists(p) {
 		return p
 	}
