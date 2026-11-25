@@ -8,7 +8,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-tree.lua" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
+    { src = "https://github.com/nvim-mini/mini.files" },
 
 	{ src = "https://github.com/mbbill/undotree" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },

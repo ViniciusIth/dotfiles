@@ -1,6 +1,7 @@
 [user]
     name = Vinícius Ithalo
     email = viniciusith@yahoo.com
+	signingkey = 9D566608C80C126A5B0F629D48E6A223BFDF1980
 
 [core]
     autocrlf = input

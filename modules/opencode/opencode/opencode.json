@@ -8,8 +8,7 @@
         },
         "build": {
             "disable": true,
-            "options": {},
-            "permission": {}
+            "options": {}, "permission": {}
         },
         "general": {
             "disable": true,
@@ -44,6 +43,16 @@
                 "postgresql://postgres:postgres@postgres:5432/<db>"
             ],
             "enabled": false
+        },
+        "wordcraft-app": {
+            "type": "local",
+            "command": [
+                "wordcraft-cli",
+                "mcp",
+                "--connect",
+                "127.0.0.1:7981"
+            ],
+            "enabled": true
         }
     }
 }

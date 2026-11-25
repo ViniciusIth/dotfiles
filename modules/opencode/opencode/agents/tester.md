@@ -1,6 +1,5 @@
 ---
 description: Testing subagent. Writes or updates test files only, runs test commands only, and never modifies production source files.
-model: openai/gpt-5.3-codex
 mode: subagent
 hidden: true
 permissions:

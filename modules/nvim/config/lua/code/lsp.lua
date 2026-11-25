@@ -19,6 +19,8 @@ vim.lsp.enable("python")
 vim.lsp.enable("typescript")
 vim.lsp.enable("yaml")
 vim.lsp.enable("jsonls")
+vim.lsp.enable("ols")
+
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)

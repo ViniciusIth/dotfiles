@@ -1,5 +1,4 @@
-export GOROOT="$HOME/.local/go"
-
+export GOROOT="/usr/lib/go"
 export GOPATH="$HOME/go"
 
 case ":$PATH:" in

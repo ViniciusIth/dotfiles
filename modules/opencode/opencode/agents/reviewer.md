@@ -1,6 +1,5 @@
 ---
 description: Review subagent. Reviews implementation quality, architecture fit, maintainability, and risk in explicitly provided files. Never writes code, never edits files, never runs builds or tests.
-model: openai/gpt-5.3-codex
 mode: subagent
 hidden: true
 permissions:

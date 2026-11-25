@@ -1,6 +1,5 @@
 ---
 description: Implementation subagent. Reads specified files and writes code only in explicitly allowed files. Does not plan, does not test behavior, does not write tests unless the task explicitly says the allowed files are test files.
-model: openai/gpt-5.3-codex
 mode: subagent
 hidden: true
 permissions:

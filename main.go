@@ -123,17 +123,22 @@ func detectSystemPM() string {
 }
 
 func detectInstaller(path string) string {
-	// pm := detectSystemPM()
-	// fmt.Printf("  detected package manager: %s\n", pm)
+	pm := detectSystemPM()
+	fmt.Printf("  detected package manager: %s\n", pm)
 
-	// if pm != "" {
-	// 	p := filepath.Join(path, pm+".sh")
-	// 	if exists(p) {
-	// 		return p
-	// 	}
-	// }
+	if pm != "" {
+		p := filepath.Join(path, pm+".sh")
+		if exists(p) {
+			return p
+		}
+	}
 
 	p := filepath.Join(path, "local.sh")
+	if exists(p) {
+		return p
+	}
+
+	p = filepath.Join(path, "install.sh")
 	if exists(p) {
 		return p
 	}

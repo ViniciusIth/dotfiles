@@ -15,7 +15,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		"javascriptreact",
 		"ledger",
 		"lua",
-		"markdown",
 		"python",
 		"rust",
 		"typescript",

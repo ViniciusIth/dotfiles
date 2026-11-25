@@ -33,6 +33,10 @@
       "rev": "cb8445f8ce85d957416c106b780efd51c6298f89",
       "src": "https://github.com/mason-org/mason.nvim"
     },
+    "mini.files": {
+      "rev": "f1cfece89892274f4f4a59d71f24eb90dcfe1b5a",
+      "src": "https://github.com/nvim-mini/mini.files"
+    },
     "multicursor.nvim": {
       "rev": "0c6ceae228bf209e8b8717df9de500770c4e7022",
       "src": "https://github.com/jake-stewart/multicursor.nvim",

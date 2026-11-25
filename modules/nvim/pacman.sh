@@ -12,7 +12,7 @@ else
 fi
 
 BIN_DIR="$USER_HOME/.local/bin"
-NVIM_DIR="$USER_HOME/.local/nvim"
+NVIM_DIR="$USER_HOME/.local/share/nvim"
 
 echo "▶ Installing neovim (managerless)"
 
@@ -66,5 +66,3 @@ if [ -n "${SUDO_USER:-}" ]; then
 fi
 
 echo "✔ neovim installed"
-
-
