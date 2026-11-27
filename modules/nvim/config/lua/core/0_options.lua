@@ -10,6 +10,7 @@ g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
 -- UI
+o.autoread = true
 o.termguicolors = true
 o.guifont = "JetBrainsMono Nerd Font Mono"
 

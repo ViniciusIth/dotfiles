@@ -44,15 +44,15 @@
             ],
             "enabled": false
         },
-        "wordcraft-app": {
-            "type": "local",
-            "command": [
-                "wordcraft-cli",
-                "mcp",
-                "--connect",
-                "127.0.0.1:7981"
-            ],
-            "enabled": true
+        "wordcraft": {
+          "type": "local",
+          "command": [
+            "wordcraft-cli",
+            "mcp",
+            "--connect",
+            "127.0.0.1:7981"
+          ],
+          "enabled": false
         }
     }
 }

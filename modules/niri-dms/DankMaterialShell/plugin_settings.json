@@ -1,7 +1,11 @@
 {
   "calculator": {
     "enabled": true,
-    "trigger": "="
+    "trigger": "",
+    "noTrigger": true,
+    "calcEngine": "qalc",
+    "persistHistoryOnFile": false,
+    "qalcCommand": "qalc -i -t -set \"decimal comma off\" -c 0"
   },
   "dankBatteryAlerts": {
     "enabled": true
@@ -14,5 +18,12 @@
   },
   "powerOptions": {
     "enabled": true
+  },
+  "bongoCat": {
+    "enabled": true
+  },
+  "dankKDEConnect": {
+    "enabled": true,
+    "selectedDeviceId": ""
   }
 }

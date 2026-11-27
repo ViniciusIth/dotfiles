@@ -1,0 +1,28 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "bongoCat": {
+      "repo": "https://github.com/hthienloc/dms-plugins",
+      "path": "bongoCat",
+      "commit": "47fd82f6046dc03bd5ca323a3d7f6fd00431ce1c"
+    },
+    "calculator": {
+      "repo": "https://github.com/rochacbruno/DankCalculator",
+      "commit": "a27b80ad8c3dd42da11af83461674fb362817515"
+    },
+    "dankBatteryAlerts": {
+      "repo": "https://github.com/AvengeMedia/dms-plugins",
+      "path": "DankBatteryAlerts",
+      "commit": "2061463d0499fe8f82ea6a2a85722ff2dfca867f"
+    },
+    "dankKDEConnect": {
+      "repo": "https://github.com/duxlabs-dev/dux-plugins",
+      "path": "DankKDEConnect",
+      "commit": "747122377eede4e23552f35c24be22758ca99ce8"
+    },
+    "powerOptions": {
+      "repo": "https://github.com/Nazahim/PowerOptions",
+      "commit": "95fa7949fd9614a21bcc7a14ff8cc917a7208cf8"
+    }
+  }
+}
