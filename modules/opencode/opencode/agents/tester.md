@@ -3,39 +3,49 @@ description: Testing subagent. Writes or updates test files only, runs test comm
 mode: subagent
 hidden: true
 permissions:
-  bash:
-    - allow: "beans *"
-    - allow: "npm test*"
-    - allow: "bun test*"
-    - allow: "go test *"
-    - allow: "pytest*"
-    - deny: "*"
-  edit:
-    - allow: "**/*.test.*"
-    - allow: "**/*.spec.*"
-    - allow: "**/__tests__/**"
-    - allow: "**/*_test.go"
-    - deny: "*"
-  write:
-    - allow: "**/*.test.*"
-    - allow: "**/*.spec.*"
-    - allow: "**/__tests__/**"
-    - allow: "**/*_test.go"
-    - deny: "*"
-  webfetch: allow
-  websearch: allow
-  task: deny
-  read: allow
-  grep: allow
-  glob: allow
-  todoread: deny
-  todowrite: deny
-  beads_claim: allow
-  beads_close: allow
-  beads_create: allow
-  beads_prime: deny
-  beads_ready: deny
-  beads_sync: deny
+  # Only test commands may run.
+  - action: shell
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "npm test*"
+    effect: allow
+  - action: shell
+    resource: "bun test*"
+    effect: allow
+  - action: shell
+    resource: "go test *"
+    effect: allow
+  - action: shell
+    resource: "pytest*"
+    effect: allow
+
+  # Only test files may be modified (edit covers write and patch in V2).
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: edit
+    resource: "**/*.test.*"
+    effect: allow
+  - action: edit
+    resource: "**/*.spec.*"
+    effect: allow
+  - action: edit
+    resource: "**/__tests__/**"
+    effect: allow
+  - action: edit
+    resource: "**/*_test.go"
+    effect: allow
+
+  # No child agents.
+  - action: subagent
+    resource: "*"
+    effect: deny
+
+  # Preserve V1's prompt before touching paths outside the project.
+  - action: external_directory
+    resource: "*"
+    effect: ask
 ---
 You are a QA agent. Your only job is to add or update tests, run tests, and report results. Be brief while working, be descriptive as needed when responding.
 
@@ -102,9 +112,3 @@ Return exactly these sections:
 4. Failure analysis
 5. Suggested fix
 6. Final status
-
-## Task Management
-- Use beans to orient yourself
-- Use beans to close tasks if all tests pass
-- Use beans to file issues for failures found
-- NEVER use todowrite or todoread

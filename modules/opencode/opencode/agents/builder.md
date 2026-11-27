@@ -3,28 +3,29 @@ description: Implementation subagent. Reads specified files and writes code only
 mode: subagent
 hidden: true
 permissions:
-  bash:
-    - allow: "beans *"
-    - allow: "npm run build"
-    - allow: "go build ./..."
-    - allow: "bun run build"
-    - deny: "*"
-  edit: allow
-  write: allow
-  webfetch: allow
-  websearch: allow
-  task: deny
-  read: allow
-  grep: allow
-  glob: allow
-  todoread: deny
-  todowrite: deny
-  beads_claim: allow
-  beads_create: allow
-  beads_prime: deny
-  beads_ready: deny
-  beads_close: deny
-  beads_sync: deny
+  # Shell access is limited to explicit build commands.
+  - action: shell
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "npm run build"
+    effect: allow
+  - action: shell
+    resource: "go build ./..."
+    effect: allow
+  - action: shell
+    resource: "bun run build"
+    effect: allow
+
+  # No child agents.
+  - action: subagent
+    resource: "*"
+    effect: deny
+
+  # Preserve V1's prompt before touching paths outside the project.
+  - action: external_directory
+    resource: "*"
+    effect: ask
 ---
 You are a focused implementation agent. Your only job is to implement the exact requested change in the exact allowed files. Be brief while working, be descriptive as needed when responding.
 
@@ -91,6 +92,4 @@ Return exactly these sections:
 4. Blockers or follow-ups
 
 ## Task Management
-- Use beans to orient yourself
-- Use beans to create tasks if you discover unrelated issues
 - NEVER use todowrite or todoread

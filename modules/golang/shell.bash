@@ -1,10 +1,4 @@
-export GOROOT="/usr/lib/go"
-export GOPATH="$HOME/go"
-
-case ":$PATH:" in
-  *":$GOROOT/bin:"*) ;;
-  *) export PATH="$GOROOT/bin:$PATH" ;;
-esac
+export GOPATH="$HOME/.local/share/go"
 
 case ":$PATH:" in
   *":$GOPATH/bin:"*) ;;

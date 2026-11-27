@@ -3,22 +3,32 @@ description: Review subagent. Reviews implementation quality, architecture fit, 
 mode: subagent
 hidden: true
 permissions:
-  bash:
-    - allow: "beans *"
-    - allow: "npm run build"
-    - allow: "go build ./..."
-    - allow: "bun run build"
-    - deny: "*"
-  edit: deny
-  write: deny
-  webfetch: allow
-  websearch: allow
-  task: deny
-  read: allow
-  grep: allow
-  glob: allow
-  todoread: deny
-  todowrite: deny
+  # Shell access is limited to explicit build commands.
+  - action: shell
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "npm run build"
+    effect: allow
+  - action: shell
+    resource: "go build ./..."
+    effect: allow
+  - action: shell
+    resource: "bun run build"
+    effect: allow
+
+  # Review only: never modify files or launch child agents.
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: subagent
+    resource: "*"
+    effect: deny
+
+  # Preserve V1's prompt before touching paths outside the project.
+  - action: external_directory
+    resource: "*"
+    effect: ask
 ---
 You are a code review agent. Your only job is to review the specified implementation and report quality issues, risks, and improvement suggestions.
 

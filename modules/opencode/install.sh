@@ -38,14 +38,6 @@ else
   run_as_target "tmp=\$(mktemp) && curl -fsSL https://opencode.ai/install -o \"\$tmp\" && bash \"\$tmp\" && rm -f \"\$tmp\""
 fi
 
-echo "▶ ensuring beads CLI (bd)"
-if target_has_cmd bd; then
-  echo "  bd already installed"
-else
-  echo "  installing beads CLI (bd)"
-  run_as_target "curl -sSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash"
-fi
-
 echo "▶ installing opencode config"
 
 mkdir -p "$USER_HOME/.config"
